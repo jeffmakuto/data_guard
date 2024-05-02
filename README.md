@@ -28,6 +28,10 @@ DataGuard offers a vibrant community space where users can seek advice, share ex
 
 To incentivize user engagement, DataGuard includes gamification elements such as badges, points, and leaderboards. Users earn rewards for completing educational modules and taking actions like sending DSARs, encouraging continuous learning and participation.
 
+### 7. Upcoming Events and Reminders
+
+Displays upcoming events related to data privacy, such as webinars, workshops, conferences, or seminars. Users can view event details, including dates, times, descriptions, speakers, and links for more information. They can also set reminders for specific events directly within the app. Reminders are sent via push notifications to ensure users don't miss important events. Additionally, users can sync event details with their preferred calendar apps for seamless schedule management.
+
 ## Installation
 ***************************************
 
