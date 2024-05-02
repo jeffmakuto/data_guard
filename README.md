@@ -29,7 +29,7 @@ DataGuard offers a vibrant community space where users can seek advice, share ex
 To incentivize user engagement, DataGuard includes gamification elements such as badges, points, and leaderboards. Users earn rewards for completing educational modules and taking actions like sending DSARs, encouraging continuous learning and participation.
 
 ## Installation
-
+***************************************
 
 ## Contributing
 
