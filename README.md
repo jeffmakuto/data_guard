@@ -6,7 +6,7 @@ DataGuard is an educational platform and toolkit designed to empower individuals
 
 ### 1. Interactive Learning Modules
 
-DataGuard offers engaging multimedia content and gamified quizzes to educate users on data protection laws such as GDPR, DPA Kenya, and others. These modules are designed to make learning about complex data privacy regulations interactive and enjoyable.
+DataGuard offers engaging multimedia content and gamified quizzes to educate users on data protection laws such as EU—GDPR, DPA—Kenya, and others. These modules are designed to make learning about complex data privacy regulations interactive and enjoyable.
 
 ### 2. DSAR Generator
 
