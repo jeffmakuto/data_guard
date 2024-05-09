@@ -1,5 +1,5 @@
 from django.test import TestCase
-from models.courses import Course
+from ilm.models.courses import Course
 
 
 class CourseModelTest(TestCase):
