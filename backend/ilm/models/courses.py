@@ -10,7 +10,7 @@ class Course(models.Model):
         description (str): Description of the course
     """
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         """
