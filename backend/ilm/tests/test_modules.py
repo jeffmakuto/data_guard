@@ -11,3 +11,17 @@ class ModuleModelTest(TestCase):
     """
     Create sample course and module for testing
     """
+    self.course = Course.objects.create(
+      title='Test Course'
+    )
+
+    self.module1 = Module.objects.create(
+      course = self.course,
+      title='Module 1'
+    )
+  
+    self.module2 = Module.objects.create(
+      course = self.course,
+      title='Module 2',
+      description='This is module2'
+    )
