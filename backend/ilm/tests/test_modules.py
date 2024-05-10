@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.db.utils import IntegrityError
 from ilm.models.courses import Course
 from ilm.models.modules import Module
 
@@ -46,7 +47,7 @@ class ModuleModelTest(TestCase):
     """
     Verifies that modules are associated with existing courses.
     """
-    with self.assertRaises(Exception):
+    with self.assertRaises(IntegrityError):
       Module.objects.create(title='Test Module', course_id=999)
 
   def test_module_update(self):
