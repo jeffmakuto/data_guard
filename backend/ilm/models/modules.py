@@ -1,6 +1,7 @@
 from django.db import models
 from .courses import Course
 
+
 class Module(models.Model):
     """
     Represents a module within a course.
@@ -14,7 +15,7 @@ class Module(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns a string representation of the title
         and description.
