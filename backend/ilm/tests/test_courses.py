@@ -44,3 +44,44 @@ class CourseModelTest(TestCase):
         )
         self.assertIsNone(self.course_without_description.description)
 
+    def test_course_unique_constraint(self):
+        """
+        Verifies the course titles are unique
+        """
+        with self.assertRaises(Exceptions):
+            Course.objects.create(title='Test Course with description')
+
+    def test_course_update(self):
+        """
+        Verifies course and title can be updated
+        """
+        self.course_with_description.title = 'Updated Title'
+        self.course_with_description.description = 'Updated Description'
+        self.course_with_description.save()
+        self.assertEqual(
+            self.course_with_description.title, 'Updated Title'
+        )
+        self.assertEqual(
+            self.course_with_description.description, 'Updated Description'
+        )
+
+    def test_course_deletion(self):
+        """
+        Verifies that a deleted course also deletes
+        associated modules
+        """
+        course_id = self.course_with_description.id
+        self.course_with_description.delete()
+        self.assertFalse(
+            Module.objects.filter(course_id=course_id).exists()
+        )
+
+    def test_course_query(self):
+        """
+        Verifies querying courses by title and description.
+        """
+        queried_course = Course.objects.filter(title='Test Course with Description').first()
+        self.assertEqual(queried_course, self.course_with_description)
+
+        queried_courses = Course.objects.filter(description__icontains='test')
+        self.assertIn(self.course_with_description, queried_courses)
