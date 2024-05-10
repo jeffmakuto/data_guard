@@ -25,3 +25,19 @@ class ModuleModelTest(TestCase):
       title='Module 2',
       description='This is module2'
     )
+
+  def test_module_creation(self):
+    """
+    Verifies modules can be created with or without
+    descriptions
+    """
+    self.assertIsNotNone(self.module1.title)
+    self.assertEqual(self.module1.title, 'Module 1')
+    self.assertIsNone(self.module1.description)
+
+    self.assertIsNotNone(self.module2.title)
+    self.assertEqual(self.module2.title, 'Module 2')
+    self.assertIsNotNone(self.module2.description)
+    self.assertEqual(
+      self.module2.description, 'This is module 2 description.'
+    )
