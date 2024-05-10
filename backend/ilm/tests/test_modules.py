@@ -78,7 +78,7 @@ class ModuleModelTest(TestCase):
         queried_module = Module.objects.filter(title='Module 1').first()
         self.assertEqual(queried_module, self.module1)
 
-        queried_modules = Module.objects.filter(description__contains='module 2')
+        queried_modules = Module.objects.filter(description__icontains='module 2')
         self.assertIn(self.module2, queried_modules)
 
         queried_modules = Module.objects.filter(course=self.course)
