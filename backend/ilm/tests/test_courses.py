@@ -48,7 +48,7 @@ class CourseModelTest(TestCase):
         """
         Verifies the course titles are unique
         """
-        with self.assertRaises(Exceptions):
+        with self.assertRaises(Exception):
             Course.objects.create(title='Test Course with description')
 
     def test_course_update(self):
