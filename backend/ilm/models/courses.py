@@ -12,7 +12,7 @@ class Course(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns a string representation of the title
         and description.
