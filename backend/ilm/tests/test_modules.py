@@ -23,7 +23,7 @@ class ModuleModelTest(TestCase):
     self.module2 = Module.objects.create(
       course = self.course,
       title='Module 2',
-      description='This is module 2 description.'
+      description='This is module 2 description'
     )
 
   def test_module_creation(self):
@@ -39,5 +39,5 @@ class ModuleModelTest(TestCase):
     self.assertEqual(self.module2.title, 'Module 2')
     self.assertIsNotNone(self.module2.description)
     self.assertEqual(
-      self.module2.description, 'This is module 2 description.'
+      self.module2.description, 'This is module 2 description'
     )
