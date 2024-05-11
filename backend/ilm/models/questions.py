@@ -1,4 +1,5 @@
 from django.db import models
+from ilm.models.quiz import Quiz
 
 
 class Question(models.Model):
