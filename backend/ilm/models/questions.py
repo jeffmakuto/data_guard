@@ -10,7 +10,7 @@ class Question(models.Model):
     Quiz, on_delete=models.CASCADE
   )
   text = models.TextField(blank=True, null=True)
-  correct_answer = models.CharField()
+  correct_answer = models.CharField(max_length=100)
   options = models.JSONField()
 
   def __str__(self) -> str:
