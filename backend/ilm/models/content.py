@@ -5,11 +5,11 @@ class Content(models.Model):
   """
   Represents content
   """
-  TYPE_CHOICES = [
+  TYPE_CHOICES = {
     'document': 'Document',
     'audio': 'Audio',
     'video': 'Video',
-  ]
+  }
 
   title = models.CharField(max_length=100)
   description = models.TextField(blank=True, null=True)
