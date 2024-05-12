@@ -1,6 +1,27 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 from ilm.models.questions import Question
+from django.core.exceptions import ValidationError
+
+
+class AnswerOption(models.Model):
+    """
+    Represents an option for a question.
+    """
+    question = models.ForeignKey(
+        Question, related_name='options', on_delete=models.CASCADE
+    )
+    text = models.CharField(max_length=100)
+    order = models.IntegerField(blank=True, null=True)  # Optional field for ordering options
+
+    def clean(self):
+        """
+        Ensure the answer text is unique among options for the associated question.
+        """
+        if self.question.options.filter(text=self.text).exists():
+            raise ValidationError(f"Duplicate answer option: {self.text}")
+
+    def __str__(self):
+        return f"Option for '{self.question.text}': {self.text}"
 
 
 class Answer(models.Model):
@@ -8,25 +29,17 @@ class Answer(models.Model):
     Represents an answer to a question.
     """
     question = models.ForeignKey(
-      Question, related_name='answers', on_delete=models.CASCADE
+        Question, related_name='answers', on_delete=models.CASCADE
     )
     text = models.CharField(max_length=100)
     is_correct = models.BooleanField()
 
-    OPTIONS = {
-        'A': 'Option A',
-        'B': 'Option B',
-        'C': 'Option C',
-    }
-
-    # Use choices field with the dictionary
-    text = models.CharField(max_length=100, choices=OPTIONS.items())
-
     def clean(self):
         """
-        No custom validation needed as choices field handles it
+        Ensure the answer text matches one of the options for the associated question.
         """
-        pass
+        if not self.question.options.filter(text=self.text).exists():
+            raise ValidationError(f"{self.text} is not a valid option for the question.")
 
     def save(self, *args, **kwargs):
         """
