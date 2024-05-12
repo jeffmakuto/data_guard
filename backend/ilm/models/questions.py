@@ -10,11 +10,14 @@ class Question(models.Model):
     Quiz, on_delete=models.CASCADE
   )
   text = models.TextField(blank=True, null=True)
-  correct_answer = models.CharField(max_length=100)
-  options = models.JSONField()
+  correct_answer = models.ForeignKey(
+    AnswerOption, on_delete=models.CASCADE, related_name="questions"
+  )
+  answers = models.ManyToManyField(AnswerOption)
 
   def __str__(self) -> str:
     """
     Return a string representation
     """
     return self.text
+  
