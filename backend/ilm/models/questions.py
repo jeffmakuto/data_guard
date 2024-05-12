@@ -1,5 +1,6 @@
 from django.db import models
 from ilm.models.quiz import Quiz
+from ilm.models.answers import AnswerOption
 
 
 class Question(models.Model):
