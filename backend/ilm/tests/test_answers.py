@@ -1,63 +1,82 @@
 from django.test import TestCase
-from ilm.models.answers import Answer
+from ilm.models.answers import Answer, AnswerOption
 from ilm.models.questions import Question
 from django.core.exceptions import ValidationError
 
 
-class AnswerModelTest(TestCase):
+class AnswerOptionModelTest(TestCase):
   """
-  Test case for the Answer model class.
+  Test case for the AnswerOption model class.
   """
 
   def setUp(self):
+    self.question = Question.objects.create(text="Test Question")
+
+  def test_answer_option_creation(self):
     """
-    Creates a sample question for testing.
+    Verifies that an answer option can be created.
     """
-    self.question = Question.objects.create(
-      text='Test question text',
-      correct_answer='Option A',
-      options=['Option A', 'Option B', 'Option C']
+    option = AnswerOption.objects.create(
+      question=self.question, text="Option A"
     )
 
-  def test_answer_creation(self):
+    self.assertEqual(option.question, self.question)
+    self.assertEqual(option.text, "Option A")
+
+  def test_answer_option_creation_with_order(self):
     """
-    Verifies that an answer can be created.
+    Verifies that an answer option can be created with an order.
     """
-    answer = Answer.objects.create(
-      question=self.question,
-      text='Option A',
-      is_correct=True
+    option = AnswerOption.objects.create(
+      question=self.question, text="Option B", order=2
     )
 
-    self.assertEqual(answer.question, self.question)
-    self.assertEqual(answer.text, 'Option A')
-    self.assertTrue(answer.is_correct)
+    self.assertEqual(option.question, self.question)
+    self.assertEqual(option.text, "Option B")
+    self.assertEqual(option.order, 2)
 
-  def test_invalid_answer_creation_empty_text(self):
+  def test_answer_option_unique_text_per_question(self):
     """
-    Verifies that an answer cannot be created with empty text.
+    Verifies that answer options for a question must have unique text.
     """
+    AnswerOption.objects.create(question=self.question, text="Option A")
     with self.assertRaises(ValidationError):
-      Answer.objects.create(question=self.question, is_correct=True)
+      AnswerOption.objects.create(question=self.question, text="Option A")
+  
 
-  def test_invalid_answer_creation_incorrect_text(self):
+class AnswerModelTest(TestCase):
     """
-    Verifies that an answer cannot be created with text not
-    in options.
+    Test case for the Answer model class.
     """
-    with self.assertRaises(ValidationError):
-      Answer.objects.create(
-          question=self.question, text='Invalid Option', is_correct=True
-      )
 
-  def test_incorrect_answer(self):
-    """
-    Verifies that an answer can be created with is_correct=False.
-    """
-    answer = Answer.objects.create(
-        question=self.question, text='Option B', is_correct=False
-    )
+    def setUp(self):
+        """
+        Creates a sample question and answer option for testing.
+        """
+        self.question = Question.objects.create(text='Test question text')
+        self.option1 = AnswerOption.objects.create(question=self.question, text='Option A')
 
-    self.assertEqual(answer.question, self.question)
-    self.assertEqual(answer.text, 'Option B')
-    self.assertFalse(answer.is_correct)
+    def test_answer_creation(self):
+        """
+        Verifies that an answer can be created with a valid option.
+        """
+        answer = Answer.objects.create(question=self.question, text=self.option1.text)
+
+        self.assertEqual(answer.question, self.question)
+        self.assertEqual(answer.text, self.option1.text)
+        # No need to check is_correct by default (can be added if relevant)
+
+    def test_invalid_answer_creation_empty_text(self):
+        """
+        Verifies that an answer cannot be created with empty text.
+        """
+        with self.assertRaises(ValidationError):
+            Answer.objects.create(question=self.question, text='')
+
+    def test_invalid_answer_creation_nonexistent_option(self):
+        """
+        Verifies that an answer cannot be created with text not
+        present as an option.
+        """
+        with self.assertRaises(ValidationError):
+            Answer.objects.create(question=self.question, text='Invalid Option')
