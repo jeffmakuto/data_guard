@@ -1,6 +1,8 @@
 from django.db import models
 from ilm.models.questions import Question
 from django.core.exceptions import ValidationError
+from ilm.models.signals import answer_saved, answer_option_saved
+from typing import Any
 
 
 class AnswerOption(models.Model):
@@ -13,14 +15,26 @@ class AnswerOption(models.Model):
     text = models.CharField(max_length=100)
     order = models.IntegerField(blank=True, null=True)  # Optional field for ordering options
 
-    def clean(self):
+    def save(self, *args: Any, **kwargs: Any) -> None:
         """
-        Ensure the answer text is unique among options for the associated question.
+        Save method overridden to send a signal after saving the instance.
+        
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+            
+        Returns:
+            None
         """
-        if self.question.options.filter(text=self.text).exists():
-            raise ValidationError(f"Duplicate answer option: {self.text}")
+        super().save(*args, **kwargs)
+        answer_option_saved.send(
+            sender=self.__class__, instance=self
+        )
 
     def __str__(self):
+        """
+        Returns a string representation
+        """
         return f"Option for '{self.question.text}': {self.text}"
 
 
@@ -34,19 +48,25 @@ class Answer(models.Model):
     text = models.CharField(max_length=100)
     is_correct = models.BooleanField()
 
-    def clean(self):
-        """
-        Ensure the answer text matches one of the options for the associated question.
-        """
-        if not self.question.options.filter(text=self.text).exists():
-            raise ValidationError(f"{self.text} is not a valid option for the question.")
-
-    def save(self, *args, **kwargs):
+    def save(self, *args: Any, **kwargs: Any) -> None:
         """
         Override the save method to perform validation before saving.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+
+        Returns:
+            None
         """
-        self.full_clean()  # Validate the answer before saving
         super().save(*args, **kwargs)
+        answer_saved.send(
+            sender=self.__class__, instance=self
+        )  # Send signal after save
+
 
     def __str__(self):
+        """
+        Returns a string representation
+        """
         return f"Answer to '{self.question.text}': {self.text} (Correct: {self.is_correct})"
