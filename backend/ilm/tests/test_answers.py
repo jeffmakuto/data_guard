@@ -1,5 +1,7 @@
 from django.test import TestCase
-from ilm.models.answers import Answer, Question
+from ilm.models.answers import Answer
+from ilm.models.questions import Question
+from django.core.exceptions import ValidationError
 
 
 class AnswerModelTest(TestCase):
@@ -23,7 +25,7 @@ class AnswerModelTest(TestCase):
         """
         answer = Answer.objects.create(
             question=self.question,
-            text='Option A',  # Correct answer for the question
+            text='Option A',
             is_correct=True
         )
         self.assertEqual(answer.question, self.question)
@@ -37,6 +39,6 @@ class AnswerModelTest(TestCase):
         with self.assertRaises(ValidationError):
             Answer.objects.create(
                 question=self.question,
-                text='Invalid Option',  # Not one of the options for the question
+                text='Invalid Option',
                 is_correct=True
             )
