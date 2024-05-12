@@ -1,0 +1,42 @@
+from django.test import TestCase
+from ilm.models.answers import Answer, Question
+
+
+class AnswerModelTest(TestCase):
+    """
+    Test case for the Answer model class.
+    """
+
+    def setUp(self):
+        """
+        Creates a sample question for testing.
+        """
+        self.question = Question.objects.create(
+            text='Test question text',
+            correct_answer='Option A',
+            options=['Option A', 'Option B', 'Option C']
+        )
+
+    def test_answer_creation(self):
+        """
+        Verifies that an answer can be created.
+        """
+        answer = Answer.objects.create(
+            question=self.question,
+            text='Option A',  # Correct answer for the question
+            is_correct=True
+        )
+        self.assertEqual(answer.question, self.question)
+        self.assertEqual(answer.text, 'Option A')
+        self.assertTrue(answer.is_correct)
+
+    def test_invalid_answer_creation(self):
+        """
+        Verifies that an invalid answer cannot be created.
+        """
+        with self.assertRaises(ValidationError):
+            Answer.objects.create(
+                question=self.question,
+                text='Invalid Option',  # Not one of the options for the question
+                is_correct=True
+            )
