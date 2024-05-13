@@ -37,7 +37,6 @@ class Answer(models.Model):
         Raises:
             ValidationError: If the answer text is empty or if the corresponding answer option does not exist for the question.
         """
-
         if not self.text:
             raise ValidationError("Answer text cannot be empty.")
 
@@ -49,7 +48,6 @@ class Answer(models.Model):
         """
         Overrides the save method to ensure validation before saving.
         """
-
         self.clean()
         super().save(*args, **kwargs)
 
