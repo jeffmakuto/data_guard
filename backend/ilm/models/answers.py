@@ -7,7 +7,7 @@ class AnswerOption(models.Model):
     """
     Represents an option for an answer to a question.
     """
-    question = models.ForeignKey('questions.Question', on_delete=models.CASCADE, related_name='options')
+    question = models.ForeignKey('ilm.Question', on_delete=models.CASCADE, related_name='options')
     text = models.CharField(max_length=255)
     order = models.IntegerField(blank=True, null=True)
 
@@ -27,7 +27,7 @@ class Answer(models.Model):
         text (CharField): The text content of the answer.
     """
 
-    question = models.ForeignKey('questions.Question', on_delete=models.CASCADE, related_name='answers')
+    question = models.ForeignKey('ilm.Question', on_delete=models.CASCADE, related_name='user_answers')
     text = models.CharField(max_length=255)
 
     def clean(self):
@@ -40,7 +40,7 @@ class Answer(models.Model):
         if not self.text:
             raise ValidationError("Answer text cannot be empty.")
 
-        Question = apps.get_model('questions', 'Question')
+        Question = apps.get_model('ilm', 'Question')
         if not AnswerOption.objects.filter(question=self.question, text=self.text).exists():
             raise ValidationError("Answer option does not exist for this question.")
 
