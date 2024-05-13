@@ -21,11 +21,23 @@ class AnswerOption(models.Model):
 class Answer(models.Model):
     """
     Represents an answer to a question.
+
+    Attributes:
+        question (ForeignKey): The question to which this answer belongs.
+        text (CharField): The text content of the answer.
     """
+
     question = models.ForeignKey('questions.Question', on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
 
     def clean(self):
+        """
+        Validates the answer instance.
+
+        Raises:
+            ValidationError: If the answer text is empty or if the corresponding answer option does not exist for the question.
+        """
+
         if not self.text:
             raise ValidationError("Answer text cannot be empty.")
 
@@ -34,8 +46,16 @@ class Answer(models.Model):
             raise ValidationError("Answer option does not exist for this question.")
 
     def save(self, *args, **kwargs):
+        """
+        Overrides the save method to ensure validation before saving.
+        """
+
         self.clean()
         super().save(*args, **kwargs)
 
     def __str__(self):
+        """
+        Returns a string representation of the answer text.
+        """
+
         return self.text

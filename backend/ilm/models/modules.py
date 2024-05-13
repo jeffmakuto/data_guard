@@ -16,4 +16,7 @@ class Module(models.Model):
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
+        """
+        Returns a string representation.
+        """
         return f"{self.title} (Course: {self.course.title})"
