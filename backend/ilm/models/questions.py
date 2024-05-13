@@ -12,9 +12,9 @@ class Question(models.Model):
     )
     text = models.TextField(blank=True, null=True)
     correct_answer = models.ForeignKey(
-        AnswerOption, on_delete=models.CASCADE, related_name="questions"
+        AnswerOption, on_delete=models.CASCADE, related_name='questions'
     )
-    answers = models.ManyToManyField(AnswerOption)
+    answers = models.ManyToManyField(AnswerOption, related_name='question_answers')
 
     def __str__(self) -> str:
         """
