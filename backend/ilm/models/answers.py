@@ -7,7 +7,7 @@ class AnswerOption(models.Model):
     """
     Represents an option for an answer to a question.
     """
-    question = models.ForeignKey('questions.Question', on_delete=models.CASCADE)
+    question = models.ForeignKey('questions.Question', on_delete=models.CASCADE, related_name='options')
     text = models.CharField(max_length=255)
     order = models.IntegerField(blank=True, null=True)
 
@@ -27,7 +27,7 @@ class Answer(models.Model):
         text (CharField): The text content of the answer.
     """
 
-    question = models.ForeignKey('questions.Question', on_delete=models.CASCADE)
+    question = models.ForeignKey('questions.Question', on_delete=models.CASCADE, related_name='answers')
     text = models.CharField(max_length=255)
 
     def clean(self):
