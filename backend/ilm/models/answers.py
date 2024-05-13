@@ -57,5 +57,4 @@ class Answer(models.Model):
         """
         Returns a string representation of the answer text.
         """
-
         return self.text
