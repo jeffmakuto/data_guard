@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.db.utils import IntegrityError
 from ilm.models.courses import Course
 from ilm.models.modules import Module
 
@@ -49,8 +50,9 @@ class CourseModelTest(TestCase):
         """
         Verifies the course titles are unique
         """
-        with self.assertRaises(Exception):
+        with self.assertRaises(IntegrityError):
             Course.objects.create(title='Test Course with description')
+
 
     def test_course_update(self):
         """

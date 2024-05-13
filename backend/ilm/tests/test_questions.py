@@ -1,4 +1,4 @@
-from django.test TestCase
+from django.test import TestCase
 from ilm.models.questions import Question
 from ilm.models.answers import Answer
 from ilm.models.quiz import Quiz
@@ -10,13 +10,13 @@ class QuestionModelTest(TestCase):
     """
     def setUp(self):
         """
-        Creates a sample quiz for testing.
+        Creates a sample quiz and a question for testing.
         """
         self.quiz = Quiz.objects.create(
             title='Test Quiz'
         )
 
-        question = Question.objects.create(
+        self.question = Question.objects.create(
             quiz=self.quiz,
             text='Test question text',
             correct_answer='Option A',
@@ -27,11 +27,11 @@ class QuestionModelTest(TestCase):
         """
         Verifies that a question can be created.
         """
-        self.assertEqual(question.quiz, self.quiz)
-        self.assertEqual(question.text, 'Test question text')
-        self.assertEqual(question.correct_answer, 'Option A')
+        self.assertEqual(self.question.quiz, self.quiz)
+        self.assertEqual(self.question.text, 'Test question text')
+        self.assertEqual(self.question.correct_answer, 'Option A')
         self.assertListEqual(
-            question.options, ['Option A', 'Option B', 'Option C']
+            self.question.options, ['Option A', 'Option B', 'Option C']
         )
 
     def test_question_answers_relationship(self):
