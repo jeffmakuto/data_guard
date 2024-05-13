@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.db import models
 from django.core.exceptions import ValidationError
 
@@ -40,7 +39,6 @@ class Answer(models.Model):
         if not self.text:
             raise ValidationError("Answer text cannot be empty.")
 
-        Question = apps.get_model('ilm', 'Question')
         if not AnswerOption.objects.filter(question=self.question, text=self.text).exists():
             raise ValidationError("Answer option does not exist for this question.")
 
