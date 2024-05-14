@@ -1,0 +1,56 @@
+.data-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.data{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;    
+}
+
+.data_guard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;    
+}
+
+data {
+    border: none;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    background: none;
+    color: rgb(31, 180, 130);
+}
+
+.play-pause {
+    background-color: rgb(31, 180, 130);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+}
+
+.data_guard {
+    color: rgb(170, 173, 172);
+
+    > svg {
+        width: 22px;
+        height: 22px;
+    }
+}
