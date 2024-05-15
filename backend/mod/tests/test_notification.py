@@ -20,12 +20,12 @@ class NotificationTestCase(TestCase):
         self.assertIsNotNone(notification.created_at)
     
     def test_notification_title_max_length(self):
-        notification = self.notification
+        notification = self.notification #first access the notification object
         max_length = self.notification._meta.get_field('title').max_length
         self.assertEqual(max_length, 225)
 
     def test_notification_created_at_auto_add_now(self):
-        notification = self.notification
+        notification = self.notification #first access the notification object
         self.assertIsNotNone(notification.created_at)
 
     def test_notification_order(self):
