@@ -1,4 +1,4 @@
-.playlist {
+.Data {
     display: flex;
     flex-direction: column;
     width: 350px;
@@ -22,7 +22,7 @@
     }
 }
 
-.playlist-item {
+.Data-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,7 +30,7 @@
     margin-bottom: 5px;
 }
 
-.playlist-item-info-wrapper {
+.Data-item-info-wrapper {
     display: flex;
     align-items: center;
 
@@ -42,7 +42,7 @@
     }
 }
 
-.playlist-item-info {
+.Data-item-info {
     display: flex;
     flex-direction: column;
     align-items: baseline;
@@ -59,7 +59,7 @@
     }
 }
 
-.playlist-item-duration {
+.Data-item-duration {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -76,7 +76,7 @@
     }
 }
 
-.equalizer {
+.Data {
     > svg {
         width: 20px;
         height: 20px;

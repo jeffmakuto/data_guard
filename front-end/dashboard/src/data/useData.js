@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { formatTime } from "../helpers"
 
 
-function useTracksDuration(tracks) {
-    const [isLoadingTrackDuration, setIsLoadingTrackDuration] = useState(true);
+function useDataDuration(tracks) {
+    const [isLoadingDataDuration, setIsLoadingDataDuration] = useState(true);
     const [durations, setDurations] = useState([]);
 
     useEffect(() => {
@@ -12,8 +12,8 @@ function useTracksDuration(tracks) {
                 setIsLoadingTrackDuration(true)
                 const durationsArray = [];
 
-                tracks.forEach(track => {
-                    const audio = new Audio(track.audioSrc);
+                Data.forEach(Data => {
+                    const audio = new Audio(Data.audioSrc);
                     audio.addEventListener('loadedmetadata', () => {
                         const duration = formatTime(audio.duration);
                         durationsArray.push(duration);
@@ -24,14 +24,14 @@ function useTracksDuration(tracks) {
             } catch (err) {
                 console.log(err);
             } finally {
-                setIsLoadingTrackDuration(false);
+                setIsLoadingDataDuration(false);
             }
         };
 
         fetchDurations();
-    }, [tracks])
+    }, [Data])
 
-    return { durations, isLoadingTrackDuration };
+    return { durations, isLoadingDataDuration };
 }
 
-export default useTracksDuration
+export default useDataDuration

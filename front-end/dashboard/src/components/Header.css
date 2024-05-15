@@ -1,4 +1,4 @@
-.player-header {
+.Data-header {
     height: 50px;
     width: 100%;
     display: flex;
@@ -7,7 +7,7 @@
     margin-bottom: 20px;
 }
 
-.player-title {
+.Data-title {
     display: flex;
     align-items: center;   
     
@@ -18,7 +18,7 @@
     }
 }
 
-.playlist-button {
+.Data-button {
     border: none;
     background-color: transparent;
     cursor: pointer;

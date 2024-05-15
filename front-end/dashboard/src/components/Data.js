@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import Header from './Header'
-import MusicPlayer from './MusicPlayer'
-import './Player.css'
-import PlayList from './PlayList'
+import Data_guard from './Data_guard'
+import './Data.css'
+import Data from './Data'
 
 const Player = () => {
-    const [view, setView] = useState('player')
+    const [view, setView] = useState('Data')
 
     return (
         <div className='player'>
             <Header onClickPlayList={() => setView('playlist')} />
-            {view === 'player' ? <MusicPlayer /> : view === 'playlist' ? <PlayList /> : null}
+            {view === 'Data' ? <MData_guard /> : view === 'Data' ? <Data /> : null}
         </div>
     )
 }
 
-export default Player
+export default Data

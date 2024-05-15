@@ -1,18 +1,18 @@
 import React from 'react'
-import { TbPlaylist } from "react-icons/tb";
+import { TbDatalist } from "react-icons/tb";
 
 import './Header.css'
 
-const Header = ({ onClickPlayList }) => {
+const Header = ({ onClickDataList }) => {
     return (
-        <div className='player-header'>
-            <h3 className='player-title'>
+        <div className='Data-header'>
+            <h3 className='Data-title'>
                 <img src='zunzun.png' alt='logo' />
                 Zunzun Player
             </h3>
 
-            <button className='playlist-button' onClick={onClickPlayList}>
-                <TbPlaylist />
+            <button className='Data-button' onClick={onClickDataList}>
+                <TbDatalist />
             </button>
         </div>
     )

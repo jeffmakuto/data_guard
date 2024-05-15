@@ -1,4 +1,4 @@
-.music-player {
+.Data_guard {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,13 +9,13 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.music-player-body {
+.Data_guard-body {
     display: flex;
     width: 100%;   
     gap: 20px;
 }
 
-.player {
+.Data_guard {
     width: 350px; 
 }
 

@@ -1,9 +1,9 @@
-import MusicPlayer from "./components/MusicPlayer";
+import Data_guard from "./components/Data_guard";
 
 function App() {
   return (
     <div className="App">
-      <MusicPlayer />
+      <Data_guard />
     </div>
   );
 }

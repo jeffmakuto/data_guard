@@ -1,33 +1,33 @@
 // Free songs from https://www.bensound.com/
 
-export const tracks = [
+export const Data = [
     {
-        name: 'ukulele',
-        displayName: 'Ukulele',
-        artist: 'Bensound',
-        audioSrc: 'https://www.bensound.com/bensound-music/bensound-ukulele.mp3',
+        Data: 'ukulele',
+        displayData: 'Ukulele',
+        Data: 'Bensound',
+        DataSrc: 'https://www.bensound.com/bensound-music/bensound-ukulele.mp3',
         coverUrl: 'https://www.bensound.com/bensound-img/ukulele.jpg'
     },
     {
         name: 'hey',
-        displayName: 'Hey',
-        artist: 'Bensound',
-        audioSrc: 'https://www.bensound.com/bensound-music/bensound-hey.mp3',
-        coverUrl: 'https://www.bensound.com/bensound-img/hey.jpg'
+        displayData: 'Hey',
+        aData: 'Bensound',
+        DataSrc: 'https://www.bensound.com/bensound-music/bensound-hey.mp3',
+        DataUrl: 'https://www.bensound.com/bensound-img/hey.jpg'
     },
     {
-        name: 'energy',
-        displayName: 'Energy',
-        artist: 'Bensound',
-        audioSrc: 'https://www.bensound.com/bensound-music/bensound-energy.mp3',
-        coverUrl: 'https://www.bensound.com/bensound-img/energy.jpg'
+        Data: 'energy',
+        displayData: 'Energy',
+        Data: 'Bensound',
+        Data: 'https://www.bensound.com/bensound-music/bensound-energy.mp3',
+        DataUrl: 'https://www.bensound.com/bensound-img/energy.jpg'
     },
     {
-        name: 'littleidea',
-        displayName: 'Little Idea',
-        artist: 'Bensound',
-        audioSrc: 'https://www.bensound.com/bensound-music/bensound-littleidea.mp3',
-        coverUrl: 'https://www.bensound.com/bensound-img/littleidea.jpg'
+        Data: 'littleidea',
+        displayData: 'Little Idea',
+        Data: 'Bensound',
+        DataSrc: 'https://www.bensound.com/bensound-music/bensound-littleidea.mp3',
+        DataUrl: 'https://www.bensound.com/bensound-img/littleidea.jpg'
     },
     {
         name: 'summer',

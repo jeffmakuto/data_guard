@@ -1,77 +1,77 @@
 import { createContext, useContext, useRef, useState } from "react";
-import useTracksDuration from "../hooks/useTrack";
-import { tracks } from "../data";
+import useDataDuration from "../hooks/useData";
+import { Data } from "../data";
 
 const TrackContext = createContext();
 
-const TrackProvider = ({ children }) => {
+const DataProvider = ({ children }) => {
     // References
     const audioRef = useRef(null)
     const progressBarRef = useRef(null)
 
 
     // States
-    const [trackIndex, setTrackIndex] = useState(0)
-    const [trackIndexFromList, setTrackIndexFromList] = useState(trackIndex)
-    const [track, setTrack] = useState(tracks[trackIndex])
+    const [DataIndex, setDataIndex] = useState(0)
+    const [DataIndexFromList, setDataIndexFromList] = useState(DataIndex)
+    const [Data, setData] = useState(Data[DataIndex])
     const [timeProgress, setTimeProgress] = useState(0)
     const [duration, setDuration] = useState(0)
-    const [isPlayListOpen, setIsPlayListOpen] = useState(false)
+    const [isDataListOpen, setIsDataListOpen] = useState(false)
 
     // Custom hook
-    const { tracksDuration, isLoadingTrackDuration } = useTracksDuration(tracks);
+    const { DataDuration, isLoadingDataDuration } = useDataDuration(Data);
 
 
-    function showPlayList() {
-        setIsPlayListOpen(!isPlayListOpen)
+    function showDataList() {
+        setIsDataListOpen(!isDataListOpen)
     }
 
     function handleNext() {
-        if (trackIndex >= tracks.length - 1) {
-            setTrackIndex(0)
-            setTrackIndexFromList(0)
-            setTrack(tracks[0])
+        if (DataIndex >= Data.length - 1) {
+            setDataIndex(0)
+            setDataIndexFromList(0)
+            setData(tData[0])
         } else {
-            setTrackIndex(trackIndex + 1)
-            setTrackIndexFromList(trackIndex + 1)
-            setTrack(tracks[trackIndex + 1])
+            setDataIndex(DataIndex + 1)
+            setDataIndexFromList(DataIndex + 1)
+            setData(Data[DataIndex + 1])
         }
     }
 
-    function handlePlayListItemClick(index) {
-        setTrackIndexFromList(index)
+    function handleDataListItemClick(index) {
+        setDataIndexFromList(index)
     }
 
     return (
-        <TrackContext.Provider value={{
+        <DataContext.Provider value={{
             audioRef,
             progressBarRef,
-            trackIndex,
-            trackIndexFromList,
-            track,
-            tracks,
+            DataIndex,
+            DataIndexFromList,
+            Data,
+            Data,
             timeProgress,
             duration,
-            tracksDuration,
-            isPlayListOpen,
-            isLoadingTrackDuration,
-            showPlayList,
+            DataDuration,
+            isDataListOpen,
+            isLoadingDataDuration,
+            showDataList,
             handleNext,
-            handlePlayListItemClick,
+            handleDataListItemClick,
             setDuration,
             setTimeProgress,
-            setTrackIndex,
-            setTrack,
-            setTrackIndexFromList
+            setDataIndex,
+            setData,
+            setDataIndexFromList
         }}>
             {children}
-        </TrackContext.Provider>
+        </DataContext.Provider>
     )
 }
 
-export const useTrack = () => {
-    return useContext(TrackContext);
+export const useData = () => {
+    return useContext(DataContext);
 }
 
-export default TrackProvider
+export default DataProvider
 

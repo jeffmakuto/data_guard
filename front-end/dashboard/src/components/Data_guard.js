@@ -1,23 +1,23 @@
 import React from 'react'
-import DisplayTrack from './DisplayTrack'
+import DisplayTrack from './DisplayData'
 import Controls from './Controls'
 import ProgressBar from './ProgressBar'
 // import { tracks } from '../data'
 import Header from './Header'
-import PlayList from './PlayList'
+import Data from './Data'
 import 'animate.css';
-import './MusicPlayer.css'
+import './Data.css'
 import { useTrack } from '../context/TrackContext'
 
 const MusicPlayer = () => {
     const { trackIndex, handlePlayListItemClick, showPlayList } = useTrack()
 
     return (
-        <div className='music-player'>
+        <div className='Data_guard'>
             <Header onClickPlayList={showPlayList} />
-            <div className='music-player-body'>
+            <div className='Data_guard-body'>
                 <div className='player'>
-                    <DisplayTrack />
+                    <DisplayData />
                     <ProgressBar />
                     <Controls />
                 </div>
@@ -29,4 +29,4 @@ const MusicPlayer = () => {
     )
 }
 
-export default MusicPlayer
+export default Data_guard
