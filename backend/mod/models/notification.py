@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Notification(models.Model):
     """Notification class"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=225)
     message = models.TextField()
     read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
