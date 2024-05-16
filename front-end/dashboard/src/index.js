@@ -7,8 +7,8 @@ import TrackProvider from './context/TrackContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <TrackProvider>
+    <DataProvider>
       <App />
-    </TrackProvider>
+    </DataProvider>
   </React.StrictMode>
 );
