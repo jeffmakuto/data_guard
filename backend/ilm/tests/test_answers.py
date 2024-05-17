@@ -1,5 +1,6 @@
 from django.test import TestCase
 from ilm.models.answers import Answer, AnswerOption
+from ilm.models.quiz import Quiz
 from ilm.models.questions import Question
 from django.core.exceptions import ValidationError
 
@@ -53,6 +54,7 @@ class AnswerModelTest(TestCase):
         """
         Creates a sample question and answer option for testing.
         """
+        self.quiz = Quiz.objects.create(title='Test Quiz')
         self.question = Question.objects.create(text='Test question text')
         self.option1 = AnswerOption.objects.create(question=self.question, text='Option A')
 

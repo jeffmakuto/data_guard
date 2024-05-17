@@ -15,6 +15,7 @@ class ModuleModelTest(TestCase):
     self.course = Course.objects.create(
       title='Test Course'
     )
+    self.course.save()
 
     self.module1 = Module.objects.create(
       course = self.course,

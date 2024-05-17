@@ -1,90 +1,115 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
-from django.db.utils import IntegrityError
 from ilm.models.courses import Course
-from ilm.models.modules import Module
 
 
-class CourseModelTest(TestCase):
-    """
-    Test case for the course model class.
-    """
-
+class CourseModelTestCase(TestCase):
     def setUp(self):
         """
-        Creates sample courses with and without descriptions
-        for testing.
+        Creating a dictionary with test data to use in
+        tests, ensuring consistency and reducing redundancy.
         """
-        self.course_with_description = Course.objects.create(
-            title='Test Course with Description',
-            description='This is a test description'
-        )
-
-        self.course_without_description = Course.objects.create(
-            title='Test Course without Description'
-        )
+        self.course_data = {
+            'title': 'Test Course',
+            'description': 'This is a test course'
+        }
 
     def test_course_creation(self):
         """
-        Verifies that courses can be created with and without
-        descriptions.
+        Test if a course can be created.
         """
-        self.assertIsNotNone(self.course_with_description.title)
-        self.assertEqual(
-            self.course_with_description.title, 'Test Course with Description'
-        )
+        course = Course.objects.create(**self.course_data)
+        self.assertEqual(course.title, self.course_data['title'])
+        self.assertEqual(course.description, self.course_data['description'])
 
-        # Test for description existence
-        self.assertIsNotNone(self.course_with_description.description)
-        self.assertEqual(
-            self.course_with_description.description, 'This is a test description'
-        )
+    def test_course_str_representation(self):
+        """
+        Test if the string representation of the course is correct.
+        """
+        course = Course.objects.create(**self.course_data)
+        expected_str = f"{self.course_data['title']}: {self.course_data['description']}"
+        self.assertEqual(str(course), expected_str)
 
-        # Test for handling None description
-        self.assertIsNotNone(self.course_without_description.title)
-        self.assertEqual(
-            self.course_without_description.title, 'Test Course without Description'
-        )
-        self.assertIsNone(self.course_without_description.description)
+    def test_course_description_optional(self):
+        """
+        Test if course creation succeeds even if description is not provided.
+        """
+        course_data_without_description = {
+            'title': 'Test Course Without Description'
+        }
+        course = Course.objects.create(**course_data_without_description)
+        self.assertEqual(course.title, course_data_without_description['title'])
+        self.assertIsNone(course.description)
 
-    def test_course_unique_constraint(self):
+    def test_course_attributes_type(self):
         """
-        Verifies the course titles are unique
+        Test if course attributes have the correct types.
         """
-        with self.assertRaises(IntegrityError):
-            Course.objects.create(title='Test Course with description')
+        course = Course.objects.create(**self.course_data)
+        self.assertIsInstance(course.title, str)
+        self.assertIsInstance(course.description, str)
 
+    def test_unique_title_constraint(self):
+        """
+        Test uniqueness constraint on title.
+        
+        Ensure that creating a course with a title
+        that already exists raises a ValidationError.
+        """
+        Course.objects.create(**self.course_data)
+        duplicate_course = Course(**self.course_data)
+        with self.assertRaises(ValidationError):
+            duplicate_course.full_clean()
 
-    def test_course_update(self):
+    def test_blank_title_constraint(self):
         """
-        Verifies course and title can be updated
+        Test blank constraint on title.
+        
+        Ensure that creating a course without a
+        title raises a ValidationError.
         """
-        self.course_with_description.title = 'Updated Title'
-        self.course_with_description.description = 'Updated Description'
-        self.course_with_description.save()
-        self.assertEqual(
-            self.course_with_description.title, 'Updated Title'
-        )
-        self.assertEqual(
-            self.course_with_description.description, 'Updated Description'
-        )
+        course_data_without_title = {
+            'description': 'Test description without title'
+        }
+        course = Course(**course_data_without_title)
+        with self.assertRaises(ValidationError):
+            course.full_clean()
 
-    def test_course_deletion(self):
+    def test_update_course(self):
         """
-        Verifies that a deleted course also deletes
-        associated modules
+        Verify that you can update the attributes of an existing course.
         """
-        course_id = self.course_with_description.id
-        self.course_with_description.delete()
-        self.assertFalse(
-            Module.objects.filter(course_id=course_id).exists()
-        )
+        course = Course.objects.create(**self.course_data)
+        new_title = 'New Title'
+        new_description = 'New Description'
+        course.title = new_title
+        course.description = new_description
+        course.save()
+        # Retrieve the course again from the database
+        # to ensure changes are persisted
+        updated_course = Course.objects.get(pk=course.pk)
+        self.assertEqual(updated_course.title, new_title)
+        self.assertEqual(updated_course.description, new_description)
 
-    def test_course_query(self):
+    def test_delete_course(self):
         """
-        Verifies querying courses by title and description.
+        Test deleting a course.
         """
-        queried_course = Course.objects.filter(title='Test Course with Description').first()
-        self.assertEqual(queried_course, self.course_with_description)
+        course = Course.objects.create(**self.course_data)
+        course_id = course.id
+        course.delete()
+        with self.assertRaises(Course.DoesNotExist):
+            Course.objects.get(pk=course_id)
 
-        queried_courses = Course.objects.filter(description__icontains='test')
-        self.assertIn(self.course_with_description, queried_courses)
+    def test_course_description_max_length(self):
+        """
+        Test maximum length constraint on description.
+        """
+        long_description = "a" * 1001  # Exceeds the max length of TextField
+        course_data_long_description = {
+            'title': 'Course with Long Description',
+            'description': long_description
+        }
+        course = Course(**course_data_long_description)
+        with self.assertRaises(ValidationError):
+            course.full_clean()
