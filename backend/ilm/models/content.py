@@ -15,7 +15,6 @@ class Content(models.Model):
         file (FileField): File field to store the content file
     """
     CONTENT_TYPES = (
-        ('document', 'Document'),
         ('audio', 'Audio'),
         ('video', 'Video'),
         ('picture', 'Picture'),
@@ -24,7 +23,7 @@ class Content(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content_type = models.CharField(max_length=10, choices=CONTENT_TYPES)
-    file = models.FileField(upload_to='module_contents/', validators=[FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'mp3', 'mp4', 'mov', 'avi', 'jpg', 'jpeg', 'png'])])
+    file = models.FileField(upload_to='module_contents/', validators=[FileExtensionValidator(allowed_extensions=['mp3', 'mp4', 'mov', 'avi', 'jpg', 'jpeg', 'png'])])
 
     def __str__(self):
         """
