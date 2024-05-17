@@ -1,45 +1,41 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxLengthValidator
+from django.core.validators import FileExtensionValidator
 from .modules import Module
 
 
 class Content(models.Model):
     """
-    Represents content.
+    Represents content within a module.
+    
+    Attributes:
+        module (ForeignKey): Foreign key to the associated Module model
+        title (str): Title of the content
+        content_type (str): Type of content (e.g., document, audio, video, picture)
+        file (FileField): File field to store the content file
     """
-    TYPE_CHOICES = (
+    CONTENT_TYPES = (
         ('document', 'Document'),
         ('audio', 'Audio'),
         ('video', 'Video'),
+        ('picture', 'Picture'),
     )
-
+    
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100, blank=False)
-    description = models.TextField(blank=True, null=True, validators=[MaxLengthValidator(1000)])
-    type = models.CharField(max_length=20, choices=TYPE_CHOICES, blank=False)
-    file_path = models.CharField(max_length=255, blank=False)
+    title = models.CharField(max_length=100)
+    content_type = models.CharField(max_length=10, choices=CONTENT_TYPES)
+    file = models.FileField(upload_to='module_contents/', validators=[FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx', 'mp3', 'mp4', 'mov', 'avi', 'jpg', 'jpeg', 'png'])])
 
-    def __str__(self) -> str:
+    def __str__(self):
         """
-        Returns a string representation of the content object.
+        Returns a string representation of the content.
         """
-        info = f"Title: {self.title} : {self.description or 'No description'}"
-        details = f"Type: {self.get_type_display()} \nFile Path: {self.file_path}"
-        return info + "\n" + details
+        return f"{self.title} ({self.content_type})"
 
     def clean(self):
         """
         Additional validation logic.
         """
+        # Check if title is not blank
         if not self.title:
             raise ValidationError('The title field cannot be blank.')
-
-        if self.description and len(self.description) > 1000:
-            raise ValidationError('The description cannot be longer than 1000 characters.')
-
-        if not self.type:
-            raise ValidationError('The type field cannot be blank.')
-
-        if not self.file_path:
-            raise ValidationError('The file path cannot be blank.')
