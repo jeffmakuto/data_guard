@@ -1,13 +1,20 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+from ilm.models.modules import Module
 from ilm.models.content import Content
 
 class ContentModelTestCase(TestCase):
     def setUp(self):
         """
-        Creating test data for Content.
+        Creating test data for Content and related Module.
         """
+        self.module = Module.objects.create(
+            title='Test Module',
+            description='This is a test module description.'
+        )
+
         self.content_data = {
+            'module': self.module,
             'title': 'Test Content',
             'description': 'This is a test content description',
             'type': 'document',
@@ -23,6 +30,7 @@ class ContentModelTestCase(TestCase):
         self.assertEqual(content.description, self.content_data['description'])
         self.assertEqual(content.type, self.content_data['type'])
         self.assertEqual(content.file_path, self.content_data['file_path'])
+        self.assertEqual(content.module, self.module)
 
     def test_content_str_representation(self):
         """
@@ -50,6 +58,7 @@ class ContentModelTestCase(TestCase):
         Test if content attributes have the correct types.
         """
         content = Content.objects.create(**self.content_data)
+        self.assertIsInstance(content.module, Module)
         self.assertIsInstance(content.title, str)
         self.assertIsInstance(content.description, str)
         self.assertIsInstance(content.type, str)

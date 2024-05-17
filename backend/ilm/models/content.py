@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator
+from .modules import Module
 
 
 class Content(models.Model):
@@ -13,6 +14,7 @@ class Content(models.Model):
         ('video', 'Video'),
     )
 
+    module = models.ForeignKey(Module, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=True, null=True, validators=[MaxLengthValidator(1000)])
     type = models.CharField(max_length=20, choices=TYPE_CHOICES, blank=False)
