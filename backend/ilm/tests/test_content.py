@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
-from .models import Module, Content
+from ilm.models.modules import Modules
+from ilm.models.content import Content
 from django.core.exceptions import ValidationError
 
 
