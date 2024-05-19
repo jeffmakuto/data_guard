@@ -21,7 +21,7 @@ class Course(models.Model):
         and description.
         """
         return f"{self.title}: {self.description}"
-    
+
     def clean(self):
         """
         Additional validation logic.
