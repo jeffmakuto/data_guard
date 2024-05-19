@@ -27,7 +27,9 @@ class CourseModelTestCase(TestCase):
         Test if the string representation of the course is correct.
         """
         course = Course.objects.create(**self.course_data)
-        expected_str = f"{self.course_data['title']}: {self.course_data['description']}"
+        title = self.course_data['title']
+        description = self.course_data['description']
+        expected_str = f"{title}: {description}"
         self.assertEqual(str(course), expected_str)
 
     def test_course_description_optional(self):
