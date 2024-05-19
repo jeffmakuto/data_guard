@@ -26,7 +26,9 @@ class Content(models.Model):
     file = models.FileField(
         upload_to='module_contents/',
         validators=[
-            FileExtensionValidator(allowed_extensions=['mp3', 'mp4', 'mov', 'avi', 'jpg', 'jpeg', 'png']),
+            FileExtensionValidator(
+                allowed_extensions=['mp3', 'mp4', 'mov', 'avi', 'jpg', 'jpeg', 'png']
+            ),
             MaxFileSizeValidator(100 * 1024 * 1024)  # 100 MB limit
         ]
     )
