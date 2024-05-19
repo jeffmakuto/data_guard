@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
-from ilm.models.modules import Modules
+from ilm.models.courses import Course
+from ilm.models.modules import Module
 from ilm.models.content import Content
 from django.core.exceptions import ValidationError
 
@@ -13,7 +14,8 @@ class ContentTestCase(TestCase):
         """
         Setup method to create a test Module instance.
         """
-        self.module = Module.objects.create(title="Test Module")
+        self.course = Course.objects.create(title="Test Course")
+        self.module = Module.objects.create(title="Test Module", course=self.course)
     
     def test_content_creation(self):
         """
@@ -150,4 +152,3 @@ class ContentTestCase(TestCase):
             file=SimpleUploadedFile("content2.mp4", b"")
         )
         self.assertEqual(Content.objects.count(), 2)
-            
