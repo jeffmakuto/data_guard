@@ -4,6 +4,7 @@ from django.db import models
 from .modules import Module
 from .validators import MaxFileSizeValidator
 
+
 class Content(models.Model):
     """
     Represents content within a module.
@@ -11,7 +12,9 @@ class Content(models.Model):
     Attributes:
         module (ForeignKey): Foreign key to the associated Module model
         title (str): Title of the content
-        content_type (str): Type of content (e.g., document, audio, video, picture)      
+        content_type (str): Type of content (
+        e.g., document, audio, video, picture
+        )
         file (FileField): File field to store the content file
     """
     CONTENT_TYPES = (
