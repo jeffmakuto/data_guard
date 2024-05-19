@@ -138,8 +138,6 @@ class ContentTestCase(TestCase):
             file=SimpleUploadedFile("unique1.mp3", b"")
         )
 
-        # Attempt to create another content with the same
-        #title in the same module
         content2 = Content(
             module=self.module,
             title="Unique Title",  # This title is the same as content1
@@ -148,8 +146,7 @@ class ContentTestCase(TestCase):
         )
         with self.assertRaises(ValidationError) as context:
             content2.full_clean()  # Ensure validation is triggered
-            content2.save()  # Attempt to save the content object
-            #to the database
+            content2.save()
 
         # Check if ValidationError is raised with the expected message
         self.assertIn(
