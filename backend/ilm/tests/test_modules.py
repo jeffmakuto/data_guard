@@ -33,7 +33,10 @@ class ModuleModelTestCase(TestCase):
         Test if the string representation of the module is correct.
         """
         module = Module.objects.create(**self.module_data)
-        expected_str = f"{self.module_data['title']} (Course: {self.course.title})"
+        module_title = self.module_data['title']
+        course_title = self.course.title
+        expected_str = f"{module_title} (Course: {course_title})"
+
         self.assertEqual(str(module), expected_str)
 
     def test_module_description_optional(self):
@@ -45,7 +48,9 @@ class ModuleModelTestCase(TestCase):
             'title': 'Test Module Without Description'
         }
         module = Module.objects.create(**module_data_without_description)
-        self.assertEqual(module.title, module_data_without_description['title'])
+        self.assertEqual(
+            module.title, module_data_without_description['title']
+        )
         self.assertIsNone(module.description)
 
     def test_module_attributes_type(self):
@@ -60,7 +65,7 @@ class ModuleModelTestCase(TestCase):
     def test_blank_title_constraint(self):
         """
         Test blank constraint on title.
-        
+
         Ensure that creating a module without a
         title raises a ValidationError.
         """
