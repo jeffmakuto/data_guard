@@ -38,7 +38,9 @@ class CourseModelTestCase(TestCase):
             'title': 'Test Course Without Description'
         }
         course = Course.objects.create(**course_data_without_description)
-        self.assertEqual(course.title, course_data_without_description['title'])
+        self.assertEqual(
+            course.title, course_data_without_description['title']
+        )
         self.assertIsNone(course.description)
 
     def test_course_attributes_type(self):
@@ -52,7 +54,7 @@ class CourseModelTestCase(TestCase):
     def test_unique_title_constraint(self):
         """
         Test uniqueness constraint on title.
-        
+
         Ensure that creating a course with a title
         that already exists raises a ValidationError.
         """
@@ -64,7 +66,7 @@ class CourseModelTestCase(TestCase):
     def test_blank_title_constraint(self):
         """
         Test blank constraint on title.
-        
+
         Ensure that creating a course without a
         title raises a ValidationError.
         """
