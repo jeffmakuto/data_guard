@@ -15,8 +15,10 @@ class ContentTestCase(TestCase):
         Setup method to create a test Module instance.
         """
         self.course = Course.objects.create(title="Test Course")
-        self.module = Module.objects.create(title="Test Module", course=self.course)
-    
+        self.module = Module.objects.create(
+            title="Test Module", course=self.course
+        )
+
     def test_content_creation(self):
         """
         Test valid content creation.
@@ -41,7 +43,9 @@ class ContentTestCase(TestCase):
                 file=SimpleUploadedFile("test.mp4", b"")
             )
             content.full_clean()
-        self.assertIn('The title field cannot be blank.', context.exception.messages)
+        self.assertIn(
+            'The title field cannot be blank.', context.exception.messages
+        )
 
     def test_invalid_content_type(self):
         """
@@ -84,7 +88,9 @@ class ContentTestCase(TestCase):
                 file=SimpleUploadedFile("test.mp4", b"")
             )
             content.full_clean()
-        self.assertIn('Ensure this value has at most 100 characters', context.exception.messages[0])
+        self.assertIn(
+            'Ensure this value has at most 100 characters', context.exception.messages[0]
+        )
 
     def test_null_file(self):
         """
@@ -104,7 +110,9 @@ class ContentTestCase(TestCase):
         """
         Test creation with invalid file size.
         """
-        large_file = SimpleUploadedFile("large.mp4", b"0" * (100 * 1024 * 1024 + 1))  # 100MB + 1 byte
+        large_file = SimpleUploadedFile(
+            "large.mp4", b"0" * (100 * 1024 * 1024 + 1)
+        )  # 100MB + 1 byte
         with self.assertRaises(ValidationError) as context:
             content = Content(
                 module=self.module,
@@ -139,7 +147,9 @@ class ContentTestCase(TestCase):
             content2.save()  # Attempt to save the content object to the database
 
         # Check if ValidationError is raised with the expected message
-        self.assertIn('Content with this Module and Title already exists.', context.exception.messages)
+        self.assertIn(
+            'Content with this Module and Title already exists.', context.exception.messages
+        )
 
     def test_multiple_content_creation(self):
         """
