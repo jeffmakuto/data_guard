@@ -89,7 +89,8 @@ class ContentTestCase(TestCase):
             )
             content.full_clean()
         self.assertIn(
-            'Ensure this value has at most 100 characters', context.exception.messages[0]
+            'Ensure this value has at most 100 characters',
+            context.exception.messages[0]
         )
 
     def test_null_file(self):
@@ -104,7 +105,9 @@ class ContentTestCase(TestCase):
                 file=None
             )
             content.full_clean()
-        self.assertIn('This field cannot be blank.', context.exception.messages)
+        self.assertIn(
+            'This field cannot be blank.', context.exception.messages
+        )
 
     def test_invalid_file_size(self):
         """
@@ -135,7 +138,8 @@ class ContentTestCase(TestCase):
             file=SimpleUploadedFile("unique1.mp3", b"")
         )
 
-        # Attempt to create another content with the same title in the same module
+        # Attempt to create another content with the same
+        #title in the same module
         content2 = Content(
             module=self.module,
             title="Unique Title",  # This title is the same as content1
@@ -144,11 +148,13 @@ class ContentTestCase(TestCase):
         )
         with self.assertRaises(ValidationError) as context:
             content2.full_clean()  # Ensure validation is triggered
-            content2.save()  # Attempt to save the content object to the database
+            content2.save()  # Attempt to save the content object
+            #to the database
 
         # Check if ValidationError is raised with the expected message
         self.assertIn(
-            'Content with this Module and Title already exists.', context.exception.messages
+            'Content with this Module and Title already exists.',
+            context.exception.messages
         )
 
     def test_multiple_content_creation(self):
