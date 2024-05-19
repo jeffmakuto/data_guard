@@ -27,7 +27,8 @@ class MaxFileSizeValidatorTestCase(TestCase):
         with self.assertRaises(ValidationError) as context:
             validator(file)
         self.assertEqual(
-            context.exception.messages, ['File size cannot exceed 10240 bytes.']
+            context.exception.messages,
+            ['File size cannot exceed 10240 bytes.']
         )
 
     def test_zero_file_size(self):
