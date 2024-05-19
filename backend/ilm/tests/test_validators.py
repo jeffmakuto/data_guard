@@ -10,7 +10,9 @@ class MaxFileSizeValidatorTestCase(TestCase):
         Test with a file size that is within the allowed limit.
         """
         validator = MaxFileSizeValidator(max_size=10 * 1024)  # 10 KB limit
-        file = SimpleUploadedFile("test.txt", b"0" * (10 * 1024))  # Exactly 10 KB
+        file = SimpleUploadedFile(
+            "test.txt", b"0" * (10 * 1024)
+        )  # Exactly 10 KB
         # No exception should be raised
         validator(file)
 
@@ -19,10 +21,14 @@ class MaxFileSizeValidatorTestCase(TestCase):
         Test with a file size that exceeds the allowed limit.
         """
         validator = MaxFileSizeValidator(max_size=10 * 1024)  # 10 KB limit
-        file = SimpleUploadedFile("test.txt", b"0" * (10 * 1024 + 1))  # 1 byte more than 10 KB
+        file = SimpleUploadedFile(
+            "test.txt", b"0" * (10 * 1024 + 1)
+        )  # 1 byte more than 10 KB
         with self.assertRaises(ValidationError) as context:
             validator(file)
-        self.assertEqual(context.exception.messages, ['File size cannot exceed 10240 bytes.'])
+        self.assertEqual(
+            context.exception.messages, ['File size cannot exceed 10240 bytes.']
+        )
 
     def test_zero_file_size(self):
         """
@@ -44,8 +50,12 @@ class MaxFileSizeValidatorTestCase(TestCase):
         """
         Test with a very large maximum size limit.
         """
-        validator = MaxFileSizeValidator(max_size=1024 * 1024 * 1024)  # 1 GB limit
-        file = SimpleUploadedFile("test.txt", b"0" * (1024 * 1024 * 512))  # Exactly 512 MB
+        validator = MaxFileSizeValidator(
+            max_size=1024 * 1024 * 1024
+        )  # 1 GB limit
+        file = SimpleUploadedFile(
+            "test.txt", b"0" * (1024 * 1024 * 512)
+        )  # Exactly 512 MB
         # No exception should be raised
         validator(file)
 
@@ -57,4 +67,6 @@ class MaxFileSizeValidatorTestCase(TestCase):
         file = SimpleUploadedFile("test.txt", b"0" * 1024)
         with self.assertRaises(ValidationError) as context:
             validator(file)
-        self.assertEqual(context.exception.messages, ['File size cannot exceed 0 bytes.'])
+        self.assertEqual(
+            context.exception.messages, ['File size cannot exceed 0 bytes.']
+        )
