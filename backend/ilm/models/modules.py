@@ -15,7 +15,9 @@ class Module(models.Model):
     """
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, blank=False)
-    description = models.TextField(blank=True, null=True, validators=[MaxLengthValidator(1000)])
+    description = models.TextField(
+        blank=True, null=True, validators=[MaxLengthValidator(1000)]
+    )
 
     def __str__(self):
         """
@@ -31,4 +33,6 @@ class Module(models.Model):
             raise ValidationError('The title field cannot be blank.')
 
         if self.description and len(self.description) > 1000:
-            raise ValidationError('The description cannot be longer than 1000 characters.')
+            raise ValidationError(
+                'The description cannot be longer than 1000 characters.'
+            )
