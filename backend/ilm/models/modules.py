@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxLengthValidator
 from django.core.exceptions import ValidationError
-from .courses import Course
+from . import Course
 
 
 class Module(models.Model):

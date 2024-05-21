@@ -1,8 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
-from .modules import Module
-from .validators import MaxFileSizeValidator
+from . import Module
+from . import MaxFileSizeValidator
 
 
 class Content(models.Model):
