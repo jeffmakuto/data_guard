@@ -11,7 +11,8 @@ from models import (
 
 class CourseViewSet(viewsets.ModelViewSet):
     """
-    A viewset for viewing and editing courses.
+    Viewset for Course model.
+    Provides CRUD operations for Course objects.
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -19,15 +20,17 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class ModuleViewSet(viewsets.ModelViewSet):
     """
-    A viewset for viewing and editing modules.
+    Viewset for Module model.
+    Provides CRUD operations for Module objects.
     """
-    queryset = Module.objects.all()
+    queryset = Module.objects.all().select_related('course')
     serializer_class = ModuleSerializer
 
 
 class ContentViewSet(viewsets.ModelViewSet):
     """
-    A viewset for viewing and editing contents.
+    Viewset for Content model.
+    Provides CRUD operations for Content objects.
     """
-    queryset = Content.objects.all()
+    queryset = Content.objects.all().select_related('module')
     serializer_class = ContentSerializer
