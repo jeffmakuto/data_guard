@@ -7,6 +7,7 @@ from models import (
     ModuleSerializer,
     ContentSerializer
 )
+from models.permissions import IsAdminOrReadOnly
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -16,6 +17,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class ModuleViewSet(viewsets.ModelViewSet):
@@ -25,6 +27,7 @@ class ModuleViewSet(viewsets.ModelViewSet):
     """
     queryset = Module.objects.all().select_related('course')
     serializer_class = ModuleSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class ContentViewSet(viewsets.ModelViewSet):
@@ -34,3 +37,4 @@ class ContentViewSet(viewsets.ModelViewSet):
     """
     queryset = Content.objects.all().select_related('module')
     serializer_class = ContentSerializer
+    permission_classes = [IsAdminOrReadOnly]
