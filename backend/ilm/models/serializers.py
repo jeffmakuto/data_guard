@@ -5,12 +5,6 @@ from . import Course, Module, Content
 class CourseSerializer(serializers.ModelSerializer):
     """
     Serializer for the Course model.
-
-    This serializer converts Course model instances into JSON format and 
-    validates incoming data for creating or updating Course instances.
-
-    Fields:
-        All fields of the Course model are included.
     """
     class Meta:
         model = Course
@@ -20,13 +14,10 @@ class CourseSerializer(serializers.ModelSerializer):
 class ModuleSerializer(serializers.ModelSerializer):
     """
     Serializer for the Module model.
-
-    This serializer converts Module model instances into JSON format and 
-    validates incoming data for creating or updating Module instances.
-
-    Fields:
-        All fields of the Module model are included.
+    Includes nested serializer for the related Course.
     """
+    course = CourseSerializer(read_only=True)
+
     class Meta:
         model = Module
         fields = '__all__'
@@ -35,13 +26,15 @@ class ModuleSerializer(serializers.ModelSerializer):
 class ContentSerializer(serializers.ModelSerializer):
     """
     Serializer for the Content model.
-
-    This serializer converts Content model instances into JSON format and 
-    validates incoming data for creating or updating Content instances.
-
-    Fields:
-        All fields of the Content model are included.
     """
     class Meta:
         model = Content
         fields = '__all__'
+
+    def validate_title(self, value: str) -> str:
+        """
+        Validates the title field to ensure it is not blank.
+        """
+        if not value.strip():
+            raise serializers.ValidationError("Title cannot be blank.")
+        return value
