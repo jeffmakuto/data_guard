@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-        IsAdminOrReadOnly,
+        'ilm.models.permissions.IsAdminOrReadOnly',
     ],
 }
 
