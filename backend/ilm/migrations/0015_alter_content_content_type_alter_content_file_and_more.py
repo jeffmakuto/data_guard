@@ -2,7 +2,7 @@
 
 import django.core.validators
 from django.db import migrations, models
-from ilm.models.validators import MaxFileSizeValidator
+from ilm.validators import MaxFileSizeValidator
 
 
 class Migration(migrations.Migration):
