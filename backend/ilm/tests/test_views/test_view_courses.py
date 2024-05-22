@@ -69,6 +69,20 @@ class CourseAPITest(TransactionTestCase):
         self.client.login(username='user', password='userpass')
         response = self.client.get('/api/courses/')
         self.assertEqual(response.status_code, 200)  # Non-admins can list courses
+        
+        # Non-admin users cannot perform write operations
+        response = self.client.post('/api/courses/', {'title': 'New Course', 'description': 'New Description'}, format='json')
+        self.assertEqual(response.status_code, 403)
+        
+        course_data = {'title': 'Course 1', 'description': 'Description 1'}
+        response = self.client.post('/api/courses/', course_data, format='json')
+        course_id = response.data.get('id')
+        
+        if course_id:
+            response = self.client.put(f'/api/courses/{course_id}/', {'title': 'Updated Course'}, format='json')
+            self.assertEqual(response.status_code, 403)
+            response = self.client.delete(f'/api/courses/{course_id}/')
+            self.assertEqual(response.status_code, 403)
 
     def test_validation(self):
         """
@@ -83,4 +97,10 @@ class CourseAPITest(TransactionTestCase):
         Test case for handling errors such as non-existent course ID.
         """
         response = self.client.get('/api/courses/999/')  # Non-existent course ID
+        self.assertEqual(response.status_code, 404)  # Not Found
+        
+        response = self.client.put('/api/courses/999/', {'title': 'Non-existent Course', 'description': 'Does not exist'}, format='json')
+        self.assertEqual(response.status_code, 404)  # Not Found
+        
+        response = self.client.delete('/api/courses/999/')
         self.assertEqual(response.status_code, 404)  # Not Found
