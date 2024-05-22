@@ -9,8 +9,7 @@ const DataguardApp = () => {
     
     const fetchData = async () => {
       try {
-        // Make an API call using fetch or Axios
-        const response = await fetch('https://api.dataguard.com/data');
+               const response = await fetch('https://api.dataguard.com/data');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
