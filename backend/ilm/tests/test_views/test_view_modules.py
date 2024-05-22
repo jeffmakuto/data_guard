@@ -34,6 +34,7 @@ class ModuleAPITest(TransactionTestCase):
         response = self.client.post('/api/modules/', module_data, format='json')
         self.assertEqual(response.status_code, 201)
         module_id = response.data['id']
+        self.assertIn('course', response.data)
 
         response = self.client.get(f'/api/modules/{module_id}/')
         self.assertEqual(response.status_code, 200)
