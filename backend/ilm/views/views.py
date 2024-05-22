@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from models import (
+from ilm.models import (
     Course,
     Module,
     Content,
@@ -7,7 +7,7 @@ from models import (
     ModuleSerializer,
     ContentSerializer
 )
-from models.permissions import IsAdminOrReadOnly
+from ilm.models.permissions import IsAdminOrReadOnly
 
 
 class CourseViewSet(viewsets.ModelViewSet):
