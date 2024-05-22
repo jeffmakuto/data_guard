@@ -1,6 +1,6 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
-from ilm.models.validators import MaxFileSizeValidator
+from ilm.validators import MaxFileSizeValidator
 from django.core.exceptions import ValidationError
 
 

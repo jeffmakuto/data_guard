@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from ilm.models.courses import Course
-from ilm.models.modules import Module
+from ilm.models import Course, Module
 
 
 class ModuleModelTestCase(TestCase):
