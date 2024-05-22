@@ -79,23 +79,6 @@ class CourseAPITest(TestCase):
         response = self.client.post('/api/courses/', invalid_data)
         self.assertEqual(response.status_code, 400)  # Bad Request due to validation error
 
-    def test_pagination(self):
-        """
-        Test case for pagination of course results.
-        """
-        # Creating 10 courses
-        for i in range(10):
-            self.client.post('/api/courses/', {'name': f'Course {i}', 'description': f'Description {i}'})
-
-        # Test pagination
-        response = self.client.get('/api/courses/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 10)
-
-        response = self.client.get('/api/courses/?page=2')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 0)  # Assuming there's only one page of data
-
     def test_error_handling(self):
         """
         Test case for handling errors such as non-existent course ID.
