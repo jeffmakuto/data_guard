@@ -2,6 +2,7 @@ from django.test import TransactionTestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 
+
 class CourseAPITest(TransactionTestCase):
     """
     Test case for the Course API endpoints.
