@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Content
+from ilm.models import Content
 
 
 class ContentSerializer(serializers.ModelSerializer):

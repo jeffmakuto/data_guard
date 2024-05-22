@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Module
+from ilm.models import Module
 from . import CourseSerializer
 
 

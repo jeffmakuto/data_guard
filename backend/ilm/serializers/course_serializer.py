@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Course
+from ilm.models import Course
 
 
 class CourseSerializer(serializers.ModelSerializer):
