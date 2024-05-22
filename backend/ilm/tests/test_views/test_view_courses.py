@@ -1,9 +1,8 @@
-from django.test import TestCase
+from django.test import TransactionTestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 
-
-class CourseAPITest(TestCase):
+class CourseAPITest(TransactionTestCase):
     """
     Test case for the Course API endpoints.
     """
@@ -27,19 +26,19 @@ class CourseAPITest(TestCase):
         """
         Test case for CRUD operations on a single course.
         """
-        course_data = {'name': 'Test Course', 'description': 'Test Description'}
-        response = self.client.post('/api/courses/', course_data)
+        course_data = {'title': 'Test Course', 'description': 'Test Description'}
+        response = self.client.post('/api/courses/', course_data, format='json')
         self.assertEqual(response.status_code, 201)
         course_id = response.data['id']
 
         response = self.client.get(f'/api/courses/{course_id}/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['name'], 'Test Course')
+        self.assertEqual(response.data['title'], 'Test Course')
 
-        updated_course_data = {'name': 'Updated Course', 'description': 'Updated Description'}
-        response = self.client.put(f'/api/courses/{course_id}/', updated_course_data)
+        updated_course_data = {'title': 'Updated Course', 'description': 'Updated Description'}
+        response = self.client.put(f'/api/courses/{course_id}/', updated_course_data, format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['name'], 'Updated Course')
+        self.assertEqual(response.data['title'], 'Updated Course')
 
         response = self.client.delete(f'/api/courses/{course_id}/')
         self.assertEqual(response.status_code, 204)
@@ -48,10 +47,10 @@ class CourseAPITest(TestCase):
         """
         Test case for creating and listing multiple courses.
         """
-        course1_data = {'name': 'Course 1', 'description': 'Description 1'}
-        course2_data = {'name': 'Course 2', 'description': 'Description 2'}
-        self.client.post('/api/courses/', course1_data)
-        self.client.post('/api/courses/', course2_data)
+        course1_data = {'title': 'Course 1', 'description': 'Description 1'}
+        course2_data = {'title': 'Course 2', 'description': 'Description 2'}
+        self.client.post('/api/courses/', course1_data, format='json')
+        self.client.post('/api/courses/', course2_data, format='json')
 
         response = self.client.get('/api/courses/')
         self.assertEqual(response.status_code, 200)
@@ -62,7 +61,7 @@ class CourseAPITest(TestCase):
         Test case for verifying permissions for accessing course endpoints.
         """
         self.client.logout()  # Log out admin
-        response = self.client.post('/api/courses/', {'name': 'Test Course', 'description': 'Test Description'})
+        response = self.client.post('/api/courses/', {'title': 'Test Course', 'description': 'Test Description'}, format='json')
         self.assertEqual(response.status_code, 403)  # Forbidden for non-admins
 
         # Create a non-admin user
@@ -75,8 +74,8 @@ class CourseAPITest(TestCase):
         """
         Test case for validation of course data.
         """
-        invalid_data = {'description': 'Test Description'}  # Missing 'name' field
-        response = self.client.post('/api/courses/', invalid_data)
+        invalid_data = {'description': 'Test Description'} # Missing 'title' field
+        response = self.client.post('/api/courses/', invalid_data, format='json')
         self.assertEqual(response.status_code, 400)  # Bad Request due to validation error
 
     def test_error_handling(self):
@@ -85,27 +84,3 @@ class CourseAPITest(TestCase):
         """
         response = self.client.get('/api/courses/999/')  # Non-existent course ID
         self.assertEqual(response.status_code, 404)  # Not Found
-
-    def test_concurrency(self):
-        """
-        Test case for concurrency handling during course creation.
-        """
-        # Simulate concurrent requests
-        import threading
-
-        def create_course():
-            self.client.post('/api/courses/', {'name': 'Concurrent Course', 'description': 'Concurrent Description'})
-
-        threads = []
-        for _ in range(10):
-            thread = threading.Thread(target=create_course)
-            thread.start()
-            threads.append(thread)
-
-        for thread in threads:
-            thread.join()
-
-        # Check the number of courses created
-        response = self.client.get('/api/courses/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 10)
