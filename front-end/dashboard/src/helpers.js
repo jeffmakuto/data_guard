@@ -1,12 +1,29 @@
-export const formatTime = (time) => {
-    if (time && !isNaN(time)) {
-        const minutes = Math.floor(time / 60);
-        const formatMinutes =
-            minutes < 10 ? `0${minutes}` : `${minutes}`;
-        const seconds = Math.floor(time % 60);
-        const formatSeconds =
-            seconds < 10 ? `0${seconds}` : `${seconds}`;
-        return `${formatMinutes}:${formatSeconds}`;
+export const fetchUserData = async () => {
+    try {
+      const response = await fetch('https://api.dataguard.com/userData');
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      return null;
     }
-    return '00:00';
-};
+  };
+  
+  export const calculateAge = (birthdate) => {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+  
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+  
+    return age;
+  };
+  
+  export const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+  

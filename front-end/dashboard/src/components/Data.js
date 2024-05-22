@@ -1,18 +1,38 @@
-import React, { useState } from 'react'
-import Header from './Header'
-import Data_guard from './Data_guard'
-import './Data.css'
-import Data from './Data'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './Data.css';
 
-const Player = () => {
-    const [view, setView] = useState('Data')
+import HomePage from './components/HomePage';
+import AboutPage from './components/AboutPage';
+import ResourcesPage from './components/ResourcesPage';
+import NotFoundPage from './components/NotFoundPage';
 
-    return (
-        <div className='player'>
-            <Header onClickPlayList={() => setView('playlist')} />
-            {view === 'Data' ? <MData_guard /> : view === 'Data' ? <Data /> : null}
-        </div>
-    )
-}
+const Data = () => {
+  return (
+    <Router>
+      <div>
+        <header>
+          <h1>Dataguard</h1>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/resources">Resources</a>
+          </nav>
+        </header>
+        <main>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/about" component={AboutPage} />
+            <Route path="/resources" component={ResourcesPage} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </main>
+        <footer>
+          <p>&copy; 2024 Dataguard. All rights reserved.</p>
+        </footer>
+      </div>
+    </Router>
+  );
+};
 
-export default Data
+export default Data;

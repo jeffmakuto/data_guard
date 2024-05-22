@@ -1,127 +1,117 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import './Controls.css';
 
-import {
-    IoPlayBackSharp,
-    IoPlayForwardSharp,
-    IoPlaySkipBackSharp,
-    IoPlaySkipForwardSharp,
-    IoPlaySharp,
-    IoPauseSharp,
-} from 'react-icons/io5';
-import {
-    IoMdVolumeHigh,
-    IoMdVolumeOff,
-    IoMdVolumeLow,
-} from 'react-icons/io';
-import "./Controls.css"
-import { useTrack } from '../context/TrackContext';
+export const TextInput = ({ label, type, name, value, onChange, placeholder }) => (
+  <div className="form-group">
+    <label htmlFor={name}>{label}</label>
+    <input
+      type={type}
+      id={name}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className="form-control"
+    />
+  </div>
+);
 
-const Controls = () => {
-    const playAnimationRef = useRef(null)
-    const [volume, setVolume] = useState(20)
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [muteVolume, setMuteVolume] = useState(false);
+TextInput.propTypes = {
+  label: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['text', 'email', 'password']).isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
 
-    const { audioRef, progressBarRef, duration, setTimeProgress, tracks, trackIndex, trackIndexFromList, setTrackIndex, setTrackIndexFromList, setTrack, handleNext } = useTrack()
+export const TextArea = ({ label, name, value, onChange, placeholder }) => (
+  <div className="form-group">
+    <label htmlFor={name}>{label}</label>
+    <textarea
+      id={name}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className="form-control"
+    />
+  </div>
+);
 
-    const repeat = useCallback(() => {
-        if (!audioRef.current) return
+TextArea.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
 
-        const currentTime = audioRef.current.currentTime
-        setTimeProgress(currentTime)
-        progressBarRef.current.value = currentTime
-        progressBarRef.current.style.setProperty('--range-progress', `${currentTime / duration * 100}%`)
-        playAnimationRef.current = requestAnimationFrame(repeat)
-    }, [audioRef, progressBarRef, duration, setTimeProgress])
+// Button Component
+export const Button = ({ type, onClick, children, disabled }) => (
+  <button type={type} onClick={onClick} className="btn" disabled={disabled}>
+    {children}
+  </button>
+);
 
-    useEffect(() => {
-        if (!audioRef.current) return
+Button.propTypes = {
+  type: PropTypes.oneOf(['button', 'submit', 'reset']).isRequired,
+  onClick: PropTypes.func,
+  children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool,
+};
 
-        if (isPlaying) {
-            audioRef.current.play()
-        }
-        else {
-            audioRef.current.pause()
-        }
-        playAnimationRef.current = requestAnimationFrame(repeat)
-    }, [isPlaying, audioRef, repeat])
+export const Checkbox = ({ label, name, checked, onChange }) => (
+  <div className="form-group">
+    <label className="checkbox-label">
+      <input
+        type="checkbox"
+        name={name}
+        checked={checked}
+        onChange={onChange}
+        className="form-checkbox"
+      />
+      {label}
+    </label>
+  </div>
+);
 
-    useEffect(() => {
-        if (!audioRef.current) return
+Checkbox.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
-        audioRef.current.volume = volume / 100
-        audioRef.current.muted = muteVolume;
-    }, [volume, audioRef, muteVolume])
+export const Select = ({ label, name, value, onChange, options }) => (
+  <div className="form-group">
+    <label htmlFor={name}>{label}</label>
+    <select
+      id={name}
+      name={name}
+      value={value}
+      onChange={onChange}
+      className="form-control"
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  </div>
+);
 
-    useEffect(() => {
-        if (trackIndex === trackIndexFromList) return
-
-        setTrackIndex(trackIndexFromList)
-        setTrack(tracks[trackIndexFromList])
-
-        if (!isPlaying) {
-            setIsPlaying(true)
-        }
-
-    }, [trackIndexFromList, trackIndex, setTrackIndex, setTrack, tracks, audioRef, isPlaying])
-
-    function handlePrevious() {
-        if (trackIndex === 0) {
-            setTrackIndex(tracks.length - 1)
-            setTrackIndexFromList(tracks.length - 1)
-            setTrack(tracks[tracks.length - 1])
-        } else {
-            setTrackIndex(trackIndex - 1)
-            setTrackIndexFromList(trackIndex - 1)
-            setTrack(tracks[trackIndex - 1])
-        }
-    }
-
-    function skipBackward() {
-        audioRef.current.currentTime -= 10
-    }
-
-    function skipForward() {
-        audioRef.current.currentTime += 10
-    }
-
-    return (
-        <div className='controls-container'>
-            <div className='controls'>
-                <button onClick={handlePrevious}>
-                    <IoPlaySkipBackSharp className='controls-icon' />
-                </button>
-                <button onClick={skipBackward}>
-                    <IoPlayBackSharp className='controls-icon' />
-                </button>
-                <button className='play-pause' onClick={() => setIsPlaying(!isPlaying)}>
-                    {isPlaying ? (
-                        <IoPauseSharp className='controls-icon' />
-                    ) : (
-                        <IoPlaySharp className='controls-icon' />
-                    )}
-                </button>
-                <button onClick={skipForward}>
-                    <IoPlayForwardSharp className='controls-icon' />
-                </button>
-                <button onClick={handleNext}>
-                    <IoPlaySkipForwardSharp className='controls-icon' />
-                </button>
-            </div>
-
-            <div className='volume'>
-                <button className='volume-button' onClick={() => setMuteVolume((prev) => !prev)}>
-                    {muteVolume || volume < 5 ? <IoMdVolumeOff /> : <IoMdVolumeLow />}
-                </button>
-                <input type='range' min={0} max={100} value={volume} onChange={e => setVolume(e.target.value)} style={{
-                    background: `linear-gradient(to right, rgb(31, 180, 130) ${volume}%, #ccc ${volume}%)`,
-                }} />
-                <button className='volume-button' onClick={() => setMuteVolume((prev) => !prev)}>
-                    <IoMdVolumeHigh />
-                </button>
-            </div>
-        </div>
-    )
-}
-
-export default Controls
+Select.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};

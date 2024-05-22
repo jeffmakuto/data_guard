@@ -1,21 +1,17 @@
-import React from 'react'
-import { TbDatalist } from "react-icons/tb";
+import React from 'react';
+import './Header.css';
 
-import './Header.css'
+const Header = () => {
+  return (
+    <header className="header">
+      <h1>Dataguard</h1>
+      <nav className="navbar">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/resources">Resources</a>
+      </nav>
+    </header>
+  );
+};
 
-const Header = ({ onClickDataList }) => {
-    return (
-        <div className='Data-header'>
-            <h3 className='Data-title'>
-                <img src='zunzun.png' alt='logo' />
-                Zunzun Player
-            </h3>
-
-            <button className='Data-button' onClick={onClickDataList}>
-                <TbDatalist />
-            </button>
-        </div>
-    )
-}
-
-export default Header
+export default Header;

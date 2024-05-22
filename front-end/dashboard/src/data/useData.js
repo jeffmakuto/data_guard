@@ -1,37 +1,12 @@
-import { useEffect, useState } from "react"
-import { formatTime } from "../helpers"
+import { useContext } from 'react';
+import { DataContext } from './DataContext';
 
+const useData = () => {
+  const dataContext = useContext(DataContext);
+  if (!dataContext) {
+    throw new Error('useData must be used within a DataProvider');
+  }
+  return dataContext;
+};
 
-function useDataDuration(tracks) {
-    const [isLoadingDataDuration, setIsLoadingDataDuration] = useState(true);
-    const [durations, setDurations] = useState([]);
-
-    useEffect(() => {
-        const fetchDurations = async () => {
-            try {
-                setIsLoadingTrackDuration(true)
-                const durationsArray = [];
-
-                Data.forEach(Data => {
-                    const audio = new Audio(Data.audioSrc);
-                    audio.addEventListener('loadedmetadata', () => {
-                        const duration = formatTime(audio.duration);
-                        durationsArray.push(duration);
-                    });
-                });
-
-                setDurations(durationsArray);
-            } catch (err) {
-                console.log(err);
-            } finally {
-                setIsLoadingDataDuration(false);
-            }
-        };
-
-        fetchDurations();
-    }, [Data])
-
-    return { durations, isLoadingDataDuration };
-}
-
-export default useDataDuration
+export default useData;

@@ -1,30 +1,44 @@
-.Data-header {
-    height: 50px;
-    width: 100%;
+.header {
+    background-color: #003366;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 2.5em;
+  }
+  
+  .navbar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.Data-title {
-    display: flex;
-    align-items: center;   
-    
-    > img {
-        width: 50px;
-        height: 50px;
-        margin-right: 10px;
+    justify-content: center;
+    background-color: #004080;
+    padding: 10px 0;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-weight: bold;
+  }
+  
+  .navbar a:hover {
+    background-color: #002244;
+  }
+  
+  @media (max-width: 768px) {
+    .header h1 {
+      font-size: 2em;
     }
-}
-
-.Data-button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    
-    > svg {
-        width: 28px;
-        height: 28px;
+  
+    .navbar {
+      flex-direction: column;
     }
-}
+  
+    .navbar a {
+      padding: 10px;
+    }
+  }
+  
