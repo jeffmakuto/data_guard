@@ -1,0 +1,7 @@
+from django.apps import AppConfig
+
+
+class IlmConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'ilm'
+    verbose_name = 'Interactive Learning Modules'
