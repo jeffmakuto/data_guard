@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from django.contrib.auth.models import User
-from serializers import UserSerializer
+from users.serializers import UserSerializer
 
 
 class UserDetailView(generics.RetrieveUpdateAPIView):
