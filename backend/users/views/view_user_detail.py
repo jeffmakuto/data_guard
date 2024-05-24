@@ -9,7 +9,7 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         """
