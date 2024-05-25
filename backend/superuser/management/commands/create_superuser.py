@@ -31,4 +31,8 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(self.style.WARNING('Superuser already exists.'))
         else:
-            self.stdout.write(self.style.ERROR('Missing one or more required environment variables: DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, DJANGO_SUPERUSER_PASSWORD.'))
+            self.stdout.write(
+                self.style.ERROR(
+                    'Missing one or more required environment variables: SUPERUSER_USERNAME, SUPERUSER_EMAIL, SUPERUSER_PASSWORD.'
+                )
+            )
