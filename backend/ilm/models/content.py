@@ -44,17 +44,6 @@ class Content(models.Model):
         """
         return f"{self.title} ({self.content_type})"
 
-    def clean(self) -> None:
-        """
-        Additional validation logic.
-
-        Raises:
-            ValidationError: If the title field is blank.
-        """
-        # Check if title is not blank
-        if not self.title:
-            raise ValidationError('The title field cannot be blank.')
-
     class Meta:
         """
         Meta class to define model-specific options.
