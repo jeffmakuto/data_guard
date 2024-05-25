@@ -17,3 +17,4 @@ class Notification(models.Model):
     
     class Meta:
         app_label = 'mod'
+        ordering = ['-created_at'] #Orders the notification. The latest will be at the top.
