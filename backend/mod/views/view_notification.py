@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from models.notification import Notification
+from mod.models import Notification
 from serializers import NotificationSerializer
 
 
