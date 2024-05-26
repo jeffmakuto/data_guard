@@ -9,5 +9,5 @@ class ModConfig(AppConfig):
         """
         Instantiate the signal handlers
         """
-        from models import NotificationHandler
+        from .models import NotificationHandler
         NotificationHandler()
