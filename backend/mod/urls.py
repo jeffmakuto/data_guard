@@ -1,5 +1,5 @@
 from django.urls import path
-from views import NotificationListView, NotificationUpdateView
+from .views import NotificationListView, NotificationUpdateView
 
 
 app_name = 'mod'
