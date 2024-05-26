@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions
 from mod.models import Notification
-from serializers import NotificationSerializer
+from mod.serializers import NotificationSerializer
 
 
 class NotificationListView(generics.ListAPIView):
