@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ilm',
     'users',
     'superuser',
+    'mod',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -64,6 +65,8 @@ MIDDLEWARE = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'ilm.permissions.IsAdminOrReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -149,7 +152,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
