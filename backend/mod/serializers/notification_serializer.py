@@ -1,13 +1,9 @@
 from rest_framework import serializers
-from mod.models import Notification
+from models import Notification
+
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = '__all__'
-
-    def validate_title(self, value: str) -> str:
-        """Validate the title field"""
-        if len(value) < 5:
-            raise serializers.ValidationError("Title must be at least 5 characters long")
-        return value
+        fields = ['id', 'user', 'title', 'message', 'read', 'created_at']
+        read_only_fields = ['user', 'created_at']
