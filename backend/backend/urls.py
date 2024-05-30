@@ -1,16 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from django.http import HttpResponse
 from ilm.views import CourseViewSet, ModuleViewSet, ContentViewSet
 
-# Define a simple view for the root URL
-def index(request):
-    return HttpResponse("Welcome to Data Guard application!")
-
-# Custom error handler for 404 errors
-def custom_404(request, exception):
-    return HttpResponse("Page not found.", status=404)
 
 # Initialize the DefaultRouter
 router = DefaultRouter()
@@ -25,6 +17,3 @@ urlpatterns = [
     path('api/users/', include('users.urls', namespace='users')),  # Users app routes
     path('api/notifications/', include('mod.urls', namespace='mod'))  # Notifications app routes
 ]
-
-# Custom error handlers
-handler404 = 'backend.urls.custom_404'
