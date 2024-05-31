@@ -11,7 +11,6 @@ router.register(r'modules', ModuleViewSet)
 router.register(r'contents', ContentViewSet)
 
 urlpatterns = [
-    path('', index),  # Root URL
     path('super/', admin.site.urls),  # Admin interface
     path('api/', include(router.urls)),  # API routes
     path('api/users/', include('users.urls', namespace='users')),  # Users app routes
