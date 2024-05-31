@@ -1,7 +1,7 @@
 window.onload = () => {
     const token = sessionStorage.getItem('token');
     if (!token) {
-        window.location.href = '/login.html'; // Redirect to login page if token is not present
+        window.location.href = '/login.html';
     } else {
         fetchCourses(token);
         fetchModules(token);
