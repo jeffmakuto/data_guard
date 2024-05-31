@@ -5,8 +5,11 @@ fetch('/api/courses/')
         data.forEach(course => {
             const courseElement = document.createElement('div');
             courseElement.classList.add('course');
-            courseElement.textContent = course.title;
-            courseElement.textContent = course.description;
+            courseElement.innerHTML = `
+                <strong>Course Title:</strong> ${course.title}<br>
+                <strong>Description:</strong> ${course.description || 'N/A'}<br>
+                <hr>
+            `;
             coursesList.appendChild(courseElement);
         });
     })
