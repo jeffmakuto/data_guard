@@ -9,7 +9,7 @@ const DataguardApp = () => {
     
     const fetchData = async () => {
       try {
-               const response = await fetch('https://api.dataguard.com/data');
+               const response = await fetch('https://data-guard-3fbv.onrender.com');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }

@@ -1,6 +1,6 @@
 export const fetchUserData = async () => {
     try {
-      const response = await fetch('https://api.dataguard.com/userData');
+      const response = await fetch('https://data-guard-3fbv.onrender.com');
       const data = await response.json();
       return data;
     } catch (error) {

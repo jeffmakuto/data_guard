@@ -1,152 +1,115 @@
+/* Global styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-  }
-  
-  .container {
-    width: 90%;
-    margin: 0 auto;
-    max-width: 1200px;
-  }
-  
-  header {
-    background-color: #003366;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-  }
-  
-  header h1 {
-    margin: 0;
-    font-size: 2.5em;
-  }
-  
-  nav {
-    display: flex;
-    justify-content: center;
-    background-color: #004080;
-    padding: 10px 0;
-  }
-  
-  nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    font-weight: bold;
-  }
-  
-  nav a:hover {
-    background-color: #002244;
-  }
-  
-  main {
-    padding: 20px 0;
-  }
-  
-  section {
-    background-color: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  section h2 {
-    margin-top: 0;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  label {
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-  }
-  
-  input[type="text"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus,
-  textarea:focus {
-    border-color: #003366;
-    outline: none;
-  }
-  
-  button {
-    background-color: #003366;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #002244;
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  footer {
-    background-color: #003366;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  footer p {
-    margin: 0;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
-  .mt-20 {
-    margin-top: 20px;
-  }
-  
-  .mb-20 {
-    margin-bottom: 20px;
-  }
-  
-  .p-20 {
-    padding: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    header h1 {
-      font-size: 2em;
-    }
-  
-    nav {
-      flex-direction: column;
-    }
-  
-    nav a {
-      padding: 10px;
-    }
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* App styles */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__header,
+.app__footer {
+  background: #333;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.app__title {
+  margin: 0;
+}
+
+.app__main {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Navigation styles */
+.navigation {
+  display: flex;
+  justify-content: center;
+  background: #444;
+}
+
+.navigation__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.navigation__item {
+  margin: 0 10px;
+}
+
+.navigation__link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navigation__link:hover {
+  text-decoration: underline;
+}
+
+/* Home page styles */
+.home {
+  text-align: center;
+}
+
+.home__title,
+.home__description {
+  margin: 10px 0;
+}
+
+/* About page styles */
+.about {
+  text-align: center;
+}
+
+.about__title,
+.about__description {
+  margin: 10px 0;
+}
+
+/* Resources page styles */
+.resources {
+  text-align: center;
+}
+
+.resources__title {
+  margin: 10px 0;
+}
+
+.resources__list {
+  list-style: none;
+  padding: 0;
+}
+
+.resources__item {
+  margin: 10px 0;
+}
+
+.resources__link {
+  color: #0073e6;
+  text-decoration: none;
+}
+
+.resources__link:hover {
+  text-decoration: underline;
+}
+
+/* Not Found page styles */
+.not-found {
+  text-align: center;
+}
+
+.not-found__title,
+.not-found__description {
+  margin: 10px 0;
+}

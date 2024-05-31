@@ -9,8 +9,7 @@ export const DataProvider = ({ children }) => {
   const fetchUserData = async () => {
     try {
       setIsLoading(true);
-      // Simulate fetching user data from an API
-      const response = await fetch('https://api.example.com/userData');
+      const response = await fetch('https://data-guard-3fbv.onrender.com');
       const data = await response.json();
       setUserData(data);
       setIsLoading(false);
