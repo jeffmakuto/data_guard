@@ -4,7 +4,7 @@ from ilm.serializers import ModuleSerializer
 from ilm.permissions.permissions import IsAdminOrReadOnly
 
 
-class ModuleViewSet(viewsets.ModelViewSet):
+class ModuleViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Viewset for Module model.
     Provides CRUD operations for Module objects.
