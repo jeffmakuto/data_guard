@@ -83,6 +83,13 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=int(os.getenv('REFRESH_TOKEN_LIFETIME_DAYS', 1))),
 }
 
+# Retrieve the value of VALID_EMAIL_DOMAINS environment variable
+valid_email_domains_str = os.environ.get('VALID_EMAIL_DOMAINS', '')
+   
+# Parse the comma-separated string into a list
+VALID_EMAIL_DOMAINS = valid_email_domains_str.split(',')
+
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
