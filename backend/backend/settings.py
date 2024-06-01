@@ -89,6 +89,7 @@ valid_email_domains_str = os.environ.get('VALID_EMAIL_DOMAINS', '')
 # Parse the comma-separated string into a list
 VALID_EMAIL_DOMAINS = valid_email_domains_str.split(',')
 
+APPEND_SLASH = True
 
 ROOT_URLCONF = 'backend.urls'
 
