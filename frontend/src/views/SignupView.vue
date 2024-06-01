@@ -19,6 +19,7 @@
       <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
     <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
     <button @click="returnToDashboard" class="btn btn-secondary return-btn">Return to Dashboard</button>
   </div>
 </template>
@@ -33,16 +34,15 @@ export default {
       username: '',
       password: '',
       errorMessage: '',
+      successMessage: '',
     };
   },
   computed: {
     isEmailValid() {
-      // Basic email validation using regex
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(this.email);
     },
     isPasswordStrong() {
-      // Check if password is at least 12 characters long
       return this.password.length >= 12;
     }
   },
@@ -53,7 +53,11 @@ export default {
       }
       api.register({ email: this.email, username: this.username, password: this.password })
         .then(() => {
-          this.$router.push('/login');
+          this.errorMessage = '';
+          this.successMessage = 'Account created successfully. You can now log in.';
+          setTimeout(() => {
+            this.$router.push('/login');
+          }, 3000); // Redirect after 3 seconds
         })
         .catch(error => {
           if (error.response && error.response.status === 400) {
