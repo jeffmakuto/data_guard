@@ -7,6 +7,8 @@ const apiClient = axios.create({
   },
 });
 
+console.log("API Client Base URL:", process.env.VUE_APP_BACKEND_URL);
+
 export function setAuthToken(token) {
   apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
