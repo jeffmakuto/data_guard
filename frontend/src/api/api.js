@@ -7,12 +7,27 @@ const apiClient = axios.create({
   },
 });
 
-console.log("API Client Base URL:", process.env.VUE_APP_BACKEND_URL);
+// Set up request interceptor to add JWT token to outgoing requests
+apiClient.interceptors.request.use(
+  config => {
+    // Retrieve token from local storage
+    const token = localStorage.getItem('token');
+    // If token exists, add it to the Authorization header
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+});
 
+// Function to set authentication token
 export function setAuthToken(token) {
   apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
+// API methods for login, register, and fetching data
 export default {
   login(credentials) {
     return apiClient.post('/users/login/', credentials);
