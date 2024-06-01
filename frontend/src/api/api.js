@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_BACKEND_URL || 'http://localhost:8080/api',
+  baseURL: process.env.VUE_APP_BACKEND_URL || 'https://faragha.onrender.com/api'',
   headers: {
     'Content-Type': 'application/json',
   },
