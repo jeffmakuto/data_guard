@@ -12,7 +12,7 @@ router.register(r'contents', ContentViewSet)
 
 urlpatterns = [
     path('super/', admin.site.urls),  # Admin interface
-    path('api/', include(router.urls)),  # API routes
-    path('api/users/', include('users.urls', namespace='users')),  # Users app routes
-    path('api/notifications/', include('mod.urls', namespace='mod'))  # Notifications app routes
+    path('', include(router.urls)),  # API routes without /api prefix
+    path('users/', include('users.urls', namespace='users')),  # Users app routes without /api prefix
+    path('notifications/', include('mod.urls', namespace='mod'))  # Notifications app routes without /api prefix
 ]
