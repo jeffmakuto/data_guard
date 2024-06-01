@@ -53,7 +53,7 @@ export default {
           // Redirect user to dashboard or another page
           this.$router.push('/');
         })
-        .catch(error => {
+        .catch(() => {
           // If login fails, display error message
           this.errorMessage = 'Invalid username or password';
         });
