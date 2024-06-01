@@ -14,6 +14,7 @@
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" v-model="password" required class="form-control">
+        <div v-if="!isPasswordStrong" class="error-message">Password should be at least 12 characters long.</div>
       </div>
       <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
@@ -39,19 +40,27 @@ export default {
       // Basic email validation using regex
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(this.email);
+    },
+    isPasswordStrong() {
+      // Check if password is at least 12 characters long
+      return this.password.length >= 12;
     }
   },
   methods: {
     signup() {
-      if (!this.isEmailValid) {
-        return; // Prevent form submission if email is invalid
+      if (!this.isEmailValid || !this.isPasswordStrong) {
+        return; // Prevent form submission if email or password is invalid
       }
       api.register({ email: this.email, username: this.username, password: this.password })
         .then(() => {
           this.$router.push('/login');
         })
-        .catch(() => {
-          this.errorMessage = 'Username or email already exists';
+        .catch(error => {
+          if (error.response && error.response.status === 400) {
+            this.errorMessage = error.response.data.error;
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
         });
     },
     returnToDashboard() {
