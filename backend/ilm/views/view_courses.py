@@ -4,7 +4,7 @@ from ilm.serializers import CourseSerializer
 from ilm.permissions.permissions import IsAdminOrReadOnly
 
 
-class CourseViewSet(viewsets.ModelViewSet):
+class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Viewset for Course model.
     Provides CRUD operations for Course objects.

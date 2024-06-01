@@ -4,7 +4,7 @@ from ilm.serializers import ContentSerializer
 from ilm.permissions.permissions import IsAdminOrReadOnly
 
 
-class ContentViewSet(viewsets.ModelViewSet):
+class ContentViewSet(viewsets.ReadOnlyModelViewSet):
     """
     Viewset for Content model.
     Provides CRUD operations for Content objects.
