@@ -1,4 +1,0 @@
-Sitemap: https://www.dataguard.education/sitemap.xml
-User-agent: *
-Disallow:
-
