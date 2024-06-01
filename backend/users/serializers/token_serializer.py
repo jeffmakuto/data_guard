@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.exceptions import InvalidToken
+from . import UserSerializer
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
