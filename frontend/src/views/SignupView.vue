@@ -5,7 +5,7 @@
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" v-model="email" required class="form-control">
-        <div v-if="!isEmailValid" class="error-message">Please enter a valid email address.</div>
+        <div v-if="!isEmailValid && email !== ''" class="error-message">Please enter a valid email address.</div>
       </div>
       <div class="form-group">
         <label for="username">Username:</label>
@@ -14,7 +14,7 @@
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" v-model="password" required class="form-control">
-        <div v-if="!isPasswordStrong" class="error-message">Password should be at least 12 characters long.</div>
+        <div v-if="!isPasswordStrong && password !== ''" class="error-message">Password should be at least 12 characters long.</div>
       </div>
       <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
