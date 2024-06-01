@@ -1,0 +1,61 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff; /* Blue color */
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: white; /* White color on hover */
+  color: #007bff; /* Blue color for text on hover */
+}
+
+.btn-secondary {
+  background-color: #007bff; /* Blue color */
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: white; /* White color on hover */
+  color: #007bff; /* Blue color for text on hover */
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.return-btn {
+  margin-top: 10px;
+}
