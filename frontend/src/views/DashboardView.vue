@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="topbar">
-      <img src="../assets/logo.png" alt="Data Guard" class="logo" />
+      <img src="../assets/logo.png" alt="Faragha" class="logo" />
       <div v-if="!isAuthenticated">
         <div class="auth-options">
           <button class="login-button" @click="redirectToLogin">Login</button>
