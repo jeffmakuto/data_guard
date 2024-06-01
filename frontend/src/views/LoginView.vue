@@ -28,8 +28,7 @@
 </template>
 
 <script>
-import api from '../api/api';
-import { mapActions } from 'vuex';
+import api, { setAuthToken } from '../api/api';
 
 export default {
   data() {
@@ -40,14 +39,22 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['login']),
     login() {
+      // Make login API call
       api.login({ username: this.username, password: this.password })
         .then(response => {
-          this.login(response.data.access);
+          // If login is successful, store token in local storage
+          const token = response.data.access;
+          localStorage.setItem('token', token);
+          
+          // Set token in Axios headers
+          setAuthToken(token);
+
+          // Redirect user to dashboard or another page
           this.$router.push('/');
         })
-        .catch(() => {
+        .catch(error => {
+          // If login fails, display error message
           this.errorMessage = 'Invalid username or password';
         });
     },
