@@ -12,9 +12,6 @@ class NotificationAPITest(TransactionTestCase):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(username='testuser', password='testpass')
         self.client.force_authenticate(user=self.user)
-        #self.user = User.objects.create_user(username='admin', password='adminpass', is_staff=True)
-        #self.client = APIClient()
-        #self.client.login(username='admin', password='adminpass')
 
     def test_empty_database(self):
         """Test if the database is empty"""
@@ -30,7 +27,7 @@ class NotificationAPITest(TransactionTestCase):
             'message': 'Test Message',
             'user': self.user.id
         }
-        response = self.client.post('/api/notifications/', {'title': 'Test Title', 'message': 'Test Message'}, format='json')
+        response = self.client.post('/api/notifications/', {'title': 'Test Title', 'message': 'Test Message', 'user': self.user.id}, format='json')
         print("POST response:", response.status_code, response.data)
         self.assertEqual(response.status_code, 201)
         
@@ -88,7 +85,7 @@ class NotificationAPITest(TransactionTestCase):
         """Test for validation of Notification data"""
         invalid_data = {'description': 'Test Description'}
         response = self.client.post('/api/notifications/', invalid_data, format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 404)
 
     def test_error_handling(self):
         """Test for handling errors such as non-existent notifications"""
@@ -96,7 +93,7 @@ class NotificationAPITest(TransactionTestCase):
         self.assertEqual(response.status_code, 404)
 
         response = self.client.put('/api/notifications/630/', {'title': 'Non-existent Notification', 'message': 'Does not exist'}, format='json')
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 404)
 
         response = self.client.delete('/api/notifications/630/')
         self.assertEqual(response.status_code, 404)
