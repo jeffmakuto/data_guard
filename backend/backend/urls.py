@@ -11,8 +11,8 @@ router.register(r'modules', ModuleViewSet)
 router.register(r'contents', ContentViewSet)
 
 urlpatterns = [
-    path('super/', admin.site.urls),  # Admin interface
-    path('', include(router.urls)),  # API routes without /api prefix
-    path('users/', include('users.urls', namespace='users')),  # Users app routes without /api prefix
-    path('notifications/', include('mod.urls', namespace='mod'))  # Notifications app routes without /api prefix
+    path('super/', admin.site.urls),
+    path('', include(router.urls)),
+    path('users/', include('users.urls', namespace='users')),
+    path('notifications/', include('mod.urls', namespace='mod'))
 ]
